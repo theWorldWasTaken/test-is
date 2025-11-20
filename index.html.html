@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberOps Modules 1-4 Interactive Exam</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #f0f4f8; }
+        .fade-in { animation: fadeIn 0.5s ease-in; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .slide-down { animation: slideDown 0.3s ease-out forwards; }
+        @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const questionsData = [
+            // --- MODULES 1-2: Threat Actors & Defenders ---
+            {
+                question: "Which organization is an international nonprofit organization that offers the CISSP certification?",
+                options: ["CompTIA", "(ISC)²", "IEEE", "GIAC"],
+                answer: "(ISC)²",
+                explanation: "(ISC)² (International Information System Security Certification Consortium) is widely known for the CISSP certification, which is a standard for information security professionals."
+            },
+            {
+                question: "What is the main purpose of cyberwarfare?",
+                options: ["To protect cloud-based data centers", "To gain advantage over adversaries", "To develop advanced network devices", "To simulate war scenarios"],
+                answer: "To gain advantage over adversaries",
+                explanation: "Cyberwarfare is an Internet-based conflict involving the penetration of computer systems and networks of other nations. Its primary purpose is to gain a strategic or military advantage over adversaries."
+            },
+            {
+                question: "Why do IoT devices pose a greater risk than other computing devices on a network?",
+                options: ["They require unencrypted wireless connections", "Most IoT devices do not receive frequent firmware updates", "They cannot function on isolated networks", "They use too much bandwidth"],
+                answer: "Most IoT devices do not receive frequent firmware updates",
+                explanation: "IoT devices often operate on their original firmware for their entire lifespan. Manufacturers frequently do not release security updates, making them vulnerable targets."
+            },
+            {
+                question: "Which cyber attack involves a coordinated attack from a botnet of zombie computers?",
+                options: ["MITM", "Address spoofing", "DDoS", "ICMP redirect"],
+                answer: "DDoS",
+                explanation: "A DDoS (Distributed Denial of Service) attack uses a botnet—a network of infected 'zombie' computers—to flood a target with traffic, overwhelming it."
+            },
+            {
+                question: "What is the primary motivation of a 'Script Kiddie'?",
+                options: ["Financial gain", "Political cause", "Validation and notoriety", "State security"],
+                answer: "Validation and notoriety",
+                explanation: "Script kiddies are unskilled attackers who use existing tools to launch attacks. Their motivation is often to seek attention, validation, or notoriety among peers."
+            },
+            {
+                question: "Which group of hackers is motivated by a political or social cause?",
+                options: ["Script Kiddies", "Hacktivists", "State-Sponsored Hackers", "Vulnerability Brokers"],
+                answer: "Hacktivists",
+                explanation: "Hacktivists are attackers who break into systems to promote a political agenda, social change, or ideological cause (e.g., Anonymous)."
+            },
+            {
+                question: "In the CIA Triad, what does 'Confidentiality' ensure?",
+                options: ["Data is accessible when needed", "Data is accurate and unaltered", "Data is only viewed by authorized parties", "Data is backed up daily"],
+                answer: "Data is only viewed by authorized parties",
+                explanation: "Confidentiality ensures that sensitive information is not disclosed to unauthorized individuals, entities, or processes."
+            },
+            {
+                question: "Which element of the CIA Triad is violated if a user alters a financial record without authorization?",
+                options: ["Confidentiality", "Integrity", "Availability", "Scalability"],
+                answer: "Integrity",
+                explanation: "Integrity involves maintaining the consistency, accuracy, and trustworthiness of data. Unauthorized alteration violates data integrity."
+            },
+            {
+                question: "What is a 'Zero-Day' vulnerability?",
+                options: ["A threat that is 0 days old", "A vulnerability known to the vendor but not patched", "A vulnerability unknown to the vendor and defenders", "A virus that deletes data instantly"],
+                answer: "A vulnerability unknown to the vendor and defenders",
+                explanation: "A Zero-Day vulnerability is a flaw in software that is unknown to the vendor. Because it is unknown, no patch exists to fix it."
+            },
+            {
+                question: "Which organization maintains the Common Vulnerabilities and Exposures (CVE) list?",
+                options: ["Mitre Corporation", "Cisco", "Microsoft", "NSA"],
+                answer: "Mitre Corporation",
+                explanation: "The MITRE Corporation maintains the CVE list, which is a dictionary of publicly known cybersecurity vulnerabilities."
+            },
+            {
+                question: "What is the term for a set of compromised computers controlled by a central command and control server?",
+                options: ["Botnet", "Darknet", "Intranet", "Honeypot"],
+                answer: "Botnet",
+                explanation: "A botnet is a network of private computers infected with malicious software and controlled as a group without the owners' knowledge."
+            },
+            {
+                question: "Which type of attack relies on tricking a user into revealing sensitive information via email?",
+                options: ["Phishing", "DoS", "SQL Injection", "Brute Force"],
+                answer: "Phishing",
+                explanation: "Phishing involves sending fraudulent emails that appear to be from a reputable source to induce individuals to reveal personal information."
+            },
+            {
+                question: "Which threat actor has the most resources and is often funded by a government?",
+                options: ["Hacktivist", "State-Sponsored Actor", "Script Kiddie", "Terrorist Group"],
+                answer: "State-Sponsored Actor",
+                explanation: "State-sponsored actors are funded by governments to conduct espionage or sabotage. They have significant resources, time, and sophisticated tools."
+            },
+            {
+                question: "What does the 'A' in the CIA Triad stand for?",
+                options: ["Authorization", "Accounting", "Availability", "Authentication"],
+                answer: "Availability",
+                explanation: "Availability ensures that information and resources are available to authorized users when needed."
+            },
+            {
+                question: "Personally Identifiable Information (PII) includes which of the following?",
+                options: ["Network protocols", "Social Security Number", "Operating System Version", "Firewall rules"],
+                answer: "Social Security Number",
+                explanation: "PII is any data that could potentially identify a specific individual. Social Security Numbers are a prime example of sensitive PII."
+            },
+            {
+                question: "What is the name of the database that contains information about known cybersecurity vulnerabilities?",
+                options: ["CVE", "DNS", "WHOIS", "ARP"],
+                answer: "CVE",
+                explanation: "Common Vulnerabilities and Exposures (CVE) is a catalog of known security threats. It allows sharing of data across separate vulnerability capabilities."
+            },
+            {
+                question: "Which type of hacker breaks into systems to discover vulnerabilities and report them responsibly?",
+                options: ["Black Hat", "White Hat", "Grey Hat", "Red Hat"],
+                answer: "White Hat",
+                explanation: "White Hat hackers, or ethical hackers, use their skills to improve security by exposing vulnerabilities before malicious hackers (Black Hats) can detect and exploit them."
+            },
+            {
+                question: "What is 'Pretexting' in the context of social engineering?",
+                options: ["Sending a virus via email", "Inventing a scenario to trick a victim", "Guessing passwords", "Scanning ports"],
+                answer: "Inventing a scenario to trick a victim",
+                explanation: "Pretexting is a form of social engineering where an attacker creates a fabricated scenario (the pretext) to manipulate a victim into providing information."
+            },
+            {
+                question: "Which law was enacted to control corporate financial accounting and prevent fraud?",
+                options: ["HIPAA", "Sarbanes-Oxley Act (SOX)", "GDPR", "PCI-DSS"],
+                answer: "Sarbanes-Oxley Act (SOX)",
+                explanation: "The Sarbanes-Oxley Act (SOX) of 2002 was enacted to protect investors by improving the accuracy and reliability of corporate disclosures."
+            },
+            {
+                question: "What is the purpose of a 'Honeypot'?",
+                options: ["To store passwords securely", "To lure and analyze attacker behavior", "To increase network speed", "To encrypt data"],
+                answer: "To lure and analyze attacker behavior",
+                explanation: "A honeypot is a decoy system or network designed to attract cyberattackers to study their methods or distract them from critical assets."
+            },
+            {
+                question: "Which malware type disguises itself as legitimate software?",
+                options: ["Worm", "Trojan Horse", "Virus", "Ransomware"],
+                answer: "Trojan Horse",
+                explanation: "A Trojan Horse is malware that hides within or masquerades as legitimate software to trick the user into installing it."
+            },
+            {
+                question: "What distinguishes a Worm from a Virus?",
+                options: ["Worms encrypt data", "Worms replicate without user interaction", "Worms are harmless", "Viruses only attack Linux"],
+                answer: "Worms replicate without user interaction",
+                explanation: "Unlike a virus, which needs a host file and user action to spread (like opening a file), a worm is a standalone program that replicates itself to spread to other computers."
+            },
+            {
+                question: "What is 'Ransomware'?",
+                options: ["Software that spies on users", "Malware that encrypts data and demands payment", "A tool for cracking passwords", "Ad-supported software"],
+                answer: "Malware that encrypts data and demands payment",
+                explanation: "Ransomware is a type of malware that threatens to publish the victim's data or perpetually blocks access to it (usually by encryption) unless a ransom is paid."
+            },
+            {
+                question: "Which organization created the Framework for Improving Critical Infrastructure Cybersecurity?",
+                options: ["NIST", "ISO", "IEEE", "IETF"],
+                answer: "NIST",
+                explanation: "The National Institute of Standards and Technology (NIST) developed the Cybersecurity Framework to help organizations manage and reduce cybersecurity risk."
+            },
+            {
+                question: "What is the main focus of ISO 27001?",
+                options: ["Wireless standards", "Information Security Management Systems (ISMS)", "Cable categorization", "Web development"],
+                answer: "Information Security Management Systems (ISMS)",
+                explanation: "ISO 27001 is an international standard that outlines the requirements for an Information Security Management System (ISMS)."
+            },
+            {
+                question: "What involves using a generated, convincing scenario to obtain information?",
+                options: ["Tailgating", "Pretexting", "Quid pro quo", "Baiting"],
+                answer: "Pretexting",
+                explanation: "Pretexting involves an attacker calling or emailing and pretending to be someone else (like HR or IT support) to get the victim to divulge information."
+            },
+            {
+                question: "Which team is responsible for defending the network in a cybersecurity exercise?",
+                options: ["Red Team", "Blue Team", "Purple Team", "White Team"],
+                answer: "Blue Team",
+                explanation: "In cybersecurity exercises, the Blue Team is responsible for defense and incident response, while the Red Team acts as the attacker."
+            },
+            {
+                question: "What does BYOD stand for?",
+                options: ["Bring Your Own Device", "Build Your Own Defense", "Backup Your Own Data", "Block Your Own DNS"],
+                answer: "Bring Your Own Device",
+                explanation: "BYOD refers to the policy of permitting employees to bring personally owned devices (laptops, tablets, and smart phones) to their workplace for use."
+            },
+            {
+                question: "Which attack exploits the trust a website has in a user's browser?",
+                options: ["XSS", "CSRF", "SQL Injection", "Buffer Overflow"],
+                answer: "CSRF",
+                explanation: "Cross-Site Request Forgery (CSRF) tricks the victim into submitting a malicious request. It exploits the trust a web application has in the user's authenticated session."
+            },
+            {
+                question: "What is the term for following an authorized person through a secure door?",
+                options: ["Piggybacking/Tailgating", "Phishing", "Dumpster Diving", "Shoulder Surfing"],
+                answer: "Piggybacking/Tailgating",
+                explanation: "Tailgating (or piggybacking) is a physical security breach where an unauthorized person follows an authorized person into a secure area."
+            },
+            {
+                question: "Which component involves verifying the identity of a user?",
+                options: ["Authorization", "Authentication", "Accounting", "Auditing"],
+                answer: "Authentication",
+                explanation: "Authentication is the process of verifying that someone (or something) is who they say they are (e.g., checking a password)."
+            },
+            {
+                question: "What represents the 'Internal' threat actor?",
+                options: ["A foreign government", "A disgruntled employee", "A script kiddie", "A hacktivist"],
+                answer: "A disgruntled employee",
+                explanation: "Internal threats come from individuals inside the organization, such as disgruntled employees, who have authorized access but misuse it."
+            },
+
+            // --- MODULES 3-4: Operating System Overview ---
+            {
+                question: "Why would a network administrator choose Linux as an OS in the SOC?",
+                options: ["It is easier to use than Windows", "The administrator has more control over the operating system", "It is immune to all viruses", "It costs more money"],
+                answer: "The administrator has more control over the operating system",
+                explanation: "Linux is open-source and highly customizable. This gives administrators granular control over the system, making it ideal for security operations and analysis."
+            },
+            {
+                question: "In the Linux shell, which character is used to pipe the output of one command to another?",
+                options: ["$", "#", "%", "|"],
+                answer: "|",
+                explanation: "The pipe character '|' takes the standard output (stdout) of the command on the left and feeds it as standard input (stdin) to the command on the right."
+            },
+            {
+                question: "Why is Linux considered better protected against malware than other OSs?",
+                options: ["Integrated antivirus", "Fewer deployments", "File system structure and permissions", "It is not connected to the internet"],
+                answer: "File system structure and permissions",
+                explanation: "Linux's strict privilege model (root vs user) and file permission structure make it harder for malware to spread or damage the core system compared to other OSs."
+            },
+            {
+                question: "Which Windows tool is used to secure stand-alone computers not in a domain?",
+                options: ["PowerShell", "Windows Defender", "Windows Firewall", "Local Security Policy"],
+                answer: "Local Security Policy",
+                explanation: "For computers not managed by Active Directory Group Policy, the Local Security Policy (secpol.msc) is used to enforce security requirements."
+            },
+            {
+                question: "What is the core component of the Linux operating system called?",
+                options: ["The Shell", "The Kernel", "The GUI", "The Registry"],
+                answer: "The Kernel",
+                explanation: "The Kernel is the heart of the OS. It manages hardware resources (CPU, memory, I/O) and allows software to interact with the hardware."
+            },
+            {
+                question: "Which Linux command allows a user to run a command with superuser privileges?",
+                options: ["root", "admin", "sudo", "exec"],
+                answer: "sudo",
+                explanation: "The 'sudo' (SuperUser DO) command allows a permitted user to execute a command as the superuser (root) or another user."
+            },
+            {
+                question: "In Windows, what is the central hierarchical database used to store configuration settings?",
+                options: ["The Kernel", "The Registry", "Active Directory", "Control Panel"],
+                answer: "The Registry",
+                explanation: "The Windows Registry is a database that stores low-level settings for the operating system and for applications that opt to use the registry."
+            },
+            {
+                question: "Which file system is the default for modern Windows installations?",
+                options: ["FAT32", "NTFS", "EXT4", "HFS+"],
+                answer: "NTFS",
+                explanation: "NTFS (New Technology File System) is the default file system for Windows. It supports large files, permissions (ACLs), encryption, and compression."
+            },
+            {
+                question: "Which Linux directory typically contains configuration files?",
+                options: ["/bin", "/dev", "/etc", "/home"],
+                answer: "/etc",
+                explanation: "The /etc directory is standard in the Linux file system hierarchy for storing system-wide configuration files and shell scripts used to boot the system."
+            },
+            {
+                question: "What does the Linux command 'ls' do?",
+                options: ["Lists directory contents", "Loses system files", "Loads software", "Links files"],
+                answer: "Lists directory contents",
+                explanation: "'ls' is one of the most common commands, used to list the files and subdirectories within the current directory."
+            },
+            {
+                question: "Which Windows application allows you to view running processes and performance?",
+                options: ["Event Viewer", "Task Manager", "Device Manager", "Disk Management"],
+                answer: "Task Manager",
+                explanation: "Windows Task Manager provides information about computer performance and running applications, processes, and CPU/memory usage."
+            },
+            {
+                question: "What is the Linux command to change the current directory?",
+                options: ["mv", "cp", "cd", "dir"],
+                answer: "cd",
+                explanation: "'cd' stands for Change Directory. It is used to navigate between different folders in the file system."
+            },
+            {
+                question: "In Linux permissions (rwx), what does 'x' stand for?",
+                options: ["X-ray", "Execute", "Exit", "Exclude"],
+                answer: "Execute",
+                explanation: "In the permission set rwx (read, write, execute), 'x' grants the ability to execute a file as a program or access a directory."
+            },
+            {
+                question: "Which interface interacts directly with the user in a Linux system?",
+                options: ["The Kernel", "The Hardware", "The Shell", "The BIOS"],
+                answer: "The Shell",
+                explanation: "The shell is the user interface that takes user commands and passes them to the kernel for execution."
+            },
+            {
+                question: "What is a 'CLI'?",
+                options: ["Central Log Interface", "Command Line Interface", "Common LAN Internet", "Computer Logic Input"],
+                answer: "Command Line Interface",
+                explanation: "CLI stands for Command Line Interface, a text-based interface used for interacting with software and operating systems."
+            },
+            {
+                question: "Which Windows tool displays logs of system, security, and application events?",
+                options: ["Task Scheduler", "Event Viewer", "Performance Monitor", "Registry Editor"],
+                answer: "Event Viewer",
+                explanation: "Windows Event Viewer enables administrators to view the event logs on a local or remote machine, tracking system, security, and application events."
+            },
+            {
+                question: "What is the Linux command to change file permissions?",
+                options: ["chown", "chmod", "chgrp", "cat"],
+                answer: "chmod",
+                explanation: "'chmod' (change mode) is the command used to change the access permissions of file system objects."
+            },
+            {
+                question: "Which Linux user account has full control over the system?",
+                options: ["Admin", "Root", "User1", "System"],
+                answer: "Root",
+                explanation: "The 'root' user is the superuser in Linux. It has access to all commands and files and can modify the system kernel."
+            },
+            {
+                question: "In the Windows Registry, what is a top-level key called?",
+                options: ["Folder", "Hive", "Branch", "Root"],
+                answer: "Hive",
+                explanation: "A Registry Hive is a logical group of keys, subkeys, and values in the registry. Major hives include HKEY_LOCAL_MACHINE and HKEY_CURRENT_USER."
+            },
+            {
+                question: "Which Linux command displays the contents of a file?",
+                options: ["ls", "cat", "grep", "echo"],
+                answer: "cat",
+                explanation: "'cat' (concatenate) is used to read a file and output its content to the standard output (screen)."
+            },
+            {
+                question: "What is the purpose of 'Hardening' an operating system?",
+                options: ["Making the hardware stronger", "Reducing the attack surface", "Increasing processor speed", "Installing more apps"],
+                answer: "Reducing the attack surface",
+                explanation: "Hardening involves securing a system by reducing its vulnerability surface, such as closing unused ports, removing unnecessary software, and patching."
+            },
+            {
+                question: "Which Linux file system is a journaling file system commonly used today?",
+                options: ["FAT", "NTFS", "EXT4", "ISO 9660"],
+                answer: "EXT4",
+                explanation: "EXT4 (Fourth Extended Filesystem) is a widely used journaling file system for Linux, offering improved performance and reliability over EXT3."
+            },
+            {
+                question: "What does the command 'grep' do in Linux?",
+                options: ["Deletes files", "Searches for text patterns within files", "Groups files together", "Graphically represents data"],
+                answer: "Searches for text patterns within files",
+                explanation: "'grep' searches through text or files for lines matching a regular expression or string pattern. It's essential for log analysis."
+            },
+            {
+                question: "Which Windows command line tool is a task automation and configuration management framework?",
+                options: ["Command Prompt", "Bash", "PowerShell", "Terminal"],
+                answer: "PowerShell",
+                explanation: "PowerShell is a cross-platform task automation solution made up of a command-line shell, a scripting language, and a configuration management framework."
+            },
+            {
+                question: "Where are user log files typically located in Linux?",
+                options: ["/etc", "/var/log", "/bin", "/usr"],
+                answer: "/var/log",
+                explanation: "The /var/log directory contains most log files, including system logs (syslog), authentication logs (auth.log), and application logs."
+            },
+            {
+                question: "Which command allows a user to view the current working directory in Linux?",
+                options: ["pwd", "cwd", "whereami", "dir"],
+                answer: "pwd",
+                explanation: "'pwd' stands for Print Working Directory. It outputs the full path of the directory you are currently in."
+            },
+            {
+                question: "What is 'Patch Management'?",
+                options: ["Fixing cables", "The process of acquiring, testing, and installing code changes", "Managing user passwords", "Monitoring network traffic"],
+                answer: "The process of acquiring, testing, and installing code changes",
+                explanation: "Patch management is the strategy for managing updates (patches) for software applications and technologies to fix security vulnerabilities."
+            },
+            {
+                question: "Which service translates domain names to IP addresses?",
+                options: ["DHCP", "DNS", "FTP", "HTTP"],
+                answer: "DNS",
+                explanation: "DNS (Domain Name System) is like the phonebook of the internet. It translates human-readable domain names (like google.com) into IP addresses."
+            },
+            {
+                question: "What is the Windows file that contains the boot configuration data?",
+                options: ["boot.ini", "ntldr", "BCD", "config.sys"],
+                answer: "BCD",
+                explanation: "The Boot Configuration Data (BCD) store contains boot configuration parameters and controls how the operating system is started in modern Windows."
+            },
+            {
+                question: "Which Linux symbol sends output to a file, overwriting it?",
+                options: [">", ">>", "|", "<"],
+                answer: ">",
+                explanation: "The '>' operator redirects standard output to a file. If the file exists, it is overwritten. If you want to append, you would use '>>'."
+            },
+            {
+                question: "What represents the highest level of the Linux file system hierarchy?",
+                options: ["/root", "/home", "/", "C:"],
+                answer: "/",
+                explanation: "The forward slash '/' represents the root directory, which is the top-level directory of the Linux file system hierarchy."
+            },
+            {
+                question: "Which command creates a new directory in Linux?",
+                options: ["mkdir", "mkfile", "newdir", "create"],
+                answer: "mkdir",
+                explanation: "'mkdir' stands for Make Directory. It is used to create new folders in the file system."
+            },
+            {
+                question: "What is the equivalent of the Linux 'Root' user in Windows?",
+                options: ["Power User", "Administrator", "Guest", "System Operator"],
+                answer: "Administrator",
+                explanation: "In Windows, the Administrator account has the highest level of privileges, similar to the root user in Linux."
+            }
+        ];
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function App() {
+            const [started, setStarted] = React.useState(false);
+            const [questions, setQuestions] = React.useState([]);
+            const [currentIndex, setCurrentIndex] = React.useState(0);
+            const [score, setScore] = React.useState(0);
+            const [showScore, setShowScore] = React.useState(false);
+            const [selectedOption, setSelectedOption] = React.useState(null);
+            const [isCorrect, setIsCorrect] = React.useState(null);
+            const [lockInput, setLockInput] = React.useState(false);
+
+            React.useEffect(() => {
+                // Shuffle questions on load
+                setQuestions(shuffleArray([...questionsData]));
+            }, []);
+
+            const startQuiz = () => {
+                setStarted(true);
+            };
+
+            const handleOptionClick = (option) => {
+                if (lockInput) return;
+                
+                setLockInput(true);
+                setSelectedOption(option);
+                
+                const correct = option === questions[currentIndex].answer;
+                setIsCorrect(correct);
+
+                if (correct) {
+                    setScore(score + 1);
+                }
+
+                // Increase delay to allow reading the explanation (4.5 seconds)
+                setTimeout(() => {
+                    const nextQuestion = currentIndex + 1;
+                    if (nextQuestion < questions.length) {
+                        setCurrentIndex(nextQuestion);
+                        setSelectedOption(null);
+                        setIsCorrect(null);
+                        setLockInput(false);
+                    } else {
+                        setShowScore(true);
+                    }
+                }, 4500);
+            };
+
+            const restartQuiz = () => {
+                setQuestions(shuffleArray([...questionsData]));
+                setCurrentIndex(0);
+                setScore(0);
+                setShowScore(false);
+                setSelectedOption(null);
+                setIsCorrect(null);
+                setLockInput(false);
+                setStarted(false);
+            };
+
+            if (!started) {
+                return (
+                    <div className="min-h-screen flex items-center justify-center p-4">
+                        <div className="bg-white p-8 rounded-2xl shadow-xl max-w-lg w-full text-center fade-in">
+                            <div className="mb-6 text-blue-600">
+                                <i className="fas fa-shield-alt text-6xl"></i>
+                            </div>
+                            <h1 className="text-3xl font-bold text-slate-800 mb-4">CyberOps Modules 1-4</h1>
+                            <p className="text-slate-600 mb-8">
+                                Threat Actors, Defenders, and Operating System Overview.
+                                <br/><span className="font-semibold">{questionsData.length} Questions</span>
+                            </p>
+                            <button 
+                                onClick={startQuiz}
+                                className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300 shadow-lg transform hover:-translate-y-1"
+                            >
+                                Start Exam
+                            </button>
+                        </div>
+                    </div>
+                );
+            }
+
+            if (showScore) {
+                const percentage = Math.round((score / questions.length) * 100);
+                let message = "";
+                let color = "";
+                
+                if (percentage >= 80) {
+                    message = "Excellent! You are ready for the real exam.";
+                    color = "text-green-600";
+                } else if (percentage >= 60) {
+                    message = "Good job, but review the weak spots.";
+                    color = "text-yellow-600";
+                } else {
+                    message = "Keep studying, you can do this!";
+                    color = "text-red-600";
+                }
+
+                return (
+                    <div className="min-h-screen flex items-center justify-center p-4">
+                        <div className="bg-white p-8 rounded-2xl shadow-xl max-w-lg w-full text-center fade-in">
+                            <h2 className="text-2xl font-bold text-slate-800 mb-4">Quiz Completed</h2>
+                            <div className="text-6xl font-bold text-blue-600 mb-4">{score} / {questions.length}</div>
+                            <div className={`text-xl font-semibold mb-6 ${color}`}>
+                                {percentage}% - {message}
+                            </div>
+                            <button 
+                                onClick={restartQuiz}
+                                className="bg-slate-800 hover:bg-slate-900 text-white font-bold py-3 px-6 rounded-lg transition duration-300"
+                            >
+                                Restart Quiz
+                            </button>
+                        </div>
+                    </div>
+                );
+            }
+
+            const currentQuestion = questions[currentIndex];
+
+            return (
+                <div className="min-h-screen py-8 px-4 flex flex-col items-center justify-center">
+                    <div className="bg-white p-6 md:p-8 rounded-2xl shadow-xl max-w-2xl w-full fade-in relative overflow-hidden">
+                        
+                        {/* Progress Bar */}
+                        <div className="absolute top-0 left-0 w-full h-2 bg-gray-200">
+                            <div 
+                                className="h-full bg-blue-500 transition-all duration-300"
+                                style={{ width: `${((currentIndex) / questions.length) * 100}%` }}
+                            ></div>
+                        </div>
+
+                        <div className="flex justify-between items-center mb-6 mt-2">
+                            <span className="text-slate-500 font-semibold text-sm">Question {currentIndex + 1} of {questions.length}</span>
+                            <span className="bg-blue-100 text-blue-800 text-xs font-bold px-2 py-1 rounded">Score: {score}</span>
+                        </div>
+
+                        <h2 className="text-xl md:text-2xl font-bold text-slate-800 mb-6">
+                            {currentQuestion.question}
+                        </h2>
+
+                        <div className="space-y-3">
+                            {currentQuestion.options.map((option, index) => {
+                                let btnClass = "w-full text-left p-4 rounded-lg border-2 transition-all duration-200 font-medium ";
+                                
+                                if (selectedOption === option) {
+                                    if (isCorrect) {
+                                        btnClass += "bg-green-100 border-green-500 text-green-800";
+                                    } else {
+                                        btnClass += "bg-red-100 border-red-500 text-red-800";
+                                    }
+                                } else if (selectedOption && option === currentQuestion.answer) {
+                                    btnClass += "bg-green-100 border-green-500 text-green-800";
+                                } else {
+                                    btnClass += "bg-white border-slate-200 hover:border-blue-400 hover:bg-slate-50 text-slate-700";
+                                }
+
+                                return (
+                                    <button 
+                                        key={index} 
+                                        onClick={() => handleOptionClick(option)}
+                                        disabled={lockInput}
+                                        className={btnClass}
+                                    >
+                                        <div className="flex justify-between items-center">
+                                            <span>{option}</span>
+                                            {selectedOption === option && isCorrect && <i className="fas fa-check-circle text-green-600"></i>}
+                                            {selectedOption === option && !isCorrect && <i className="fas fa-times-circle text-red-600"></i>}
+                                        </div>
+                                    </button>
+                                );
+                            })}
+                        </div>
+
+                        {/* Explanation Section */}
+                        {selectedOption && (
+                            <div className="mt-6 p-4 bg-blue-50 border-l-4 border-blue-500 text-slate-700 rounded-r-lg slide-down">
+                                <p className="font-bold text-blue-700 mb-1 flex items-center">
+                                    <i className="fas fa-lightbulb mr-2 text-yellow-500"></i>
+                                    Explanation:
+                                </p>
+                                <p className="text-sm md:text-base">{currentQuestion.explanation}</p>
+                            </div>
+                        )}
+                    </div>
+                </div>
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
