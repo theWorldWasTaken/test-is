@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberOps Modules 24-28 Interactive Exam</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #f0f4f8; }
+        .fade-in { animation: fadeIn 0.5s ease-in; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .slide-down { animation: slideDown 0.3s ease-out forwards; }
+        @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const questionsData = [
+            // --- MODULES 24-25: Protocols and Log Files ---
+            {
+                question: "Which ICMP message type should generally be stopped inbound on a firewall to prevent network mapping?",
+                options: ["Echo Reply", "Destination Unreachable", "Echo", "Source Quench"],
+                answer: "Echo",
+                explanation: "Inbound 'Echo' (ping requests) allow attackers to map the network. 'Echo Reply' is usually permitted to allow internal users to ping out."
+            },
+            {
+                question: "Which protocol uses a 'three-way handshake' to establish a connection?",
+                options: ["UDP", "TCP", "ICMP", "IP"],
+                answer: "TCP",
+                explanation: "TCP is a connection-oriented protocol that uses SYN, SYN-ACK, ACK to establish a reliable session."
+            },
+            {
+                question: "What does a Syslog severity level of '0' indicate?",
+                options: ["Debug", "Warning", "Emergency", "Informational"],
+                answer: "Emergency",
+                explanation: "Syslog levels range from 0 (Emergency - system is unusable) to 7 (Debug)."
+            },
+            {
+                question: "In a NetFlow record, what defines a 'flow'?",
+                options: ["Same source/destination IP, ports, and protocol", "Any traffic between two routers", "Traffic on a specific VLAN", "Data originating from the internet"],
+                answer: "Same source/destination IP, ports, and protocol",
+                explanation: "A flow is a unidirectional sequence of packets sharing the same source/dest IP, source/dest port, and protocol (5-tuple)."
+            },
+            {
+                question: "Which DNS record type maps a hostname to an IPv4 address?",
+                options: ["AAAA", "MX", "A", "NS"],
+                answer: "A",
+                explanation: "An 'A' record maps a hostname to an IPv4 address. 'AAAA' maps to IPv6."
+            },
+            {
+                question: "Which DNS record type is used for mail servers?",
+                options: ["CNAME", "MX", "PTR", "TXT"],
+                answer: "MX",
+                explanation: "MX (Mail Exchange) records specify the mail server responsible for accepting email on behalf of a domain."
+            },
+            {
+                question: "What is the primary purpose of a 'Proxy Server' logs?",
+                options: ["To record internal router CPU usage", "To track websites visited by internal users", "To monitor hard drive space", "To log physical door access"],
+                answer: "To track websites visited by internal users",
+                explanation: "Proxy logs provide details on HTTP/HTTPS requests made by internal users, including URLs, user agents, and time."
+            },
+            {
+                question: "What does the HTTP status code '404' mean?",
+                options: ["OK", "Unauthorized", "Not Found", "Server Error"],
+                answer: "Not Found",
+                explanation: "404 indicates the server could not find the requested resource."
+            },
+            {
+                question: "Which protocol is connectionless and does not guarantee delivery?",
+                options: ["TCP", "UDP", "HTTP", "SSH"],
+                answer: "UDP",
+                explanation: "UDP (User Datagram Protocol) is connectionless and 'best effort', meaning it does not check if packets arrived."
+            },
+            {
+                question: "What mechanism does Tor use to hide the source of traffic?",
+                options: ["Single hop VPN", "Onion Routing", "Direct Connection", "DNS Spoofing"],
+                answer: "Onion Routing",
+                explanation: "Tor encapsulates messages in layers of encryption (like an onion), bouncing traffic through random relays."
+            },
+            {
+                question: "In a Syslog message, what does the 'Facility' code represent?",
+                options: ["The severity of the error", "The source of the log message (e.g., kernel, mail)", "The time the error occurred", "The destination IP"],
+                answer: "The source of the log message (e.g., kernel, mail)",
+                explanation: "The Facility indicates which part of the system generated the message (e.g., Facility 0 is Kernel, Facility 2 is Mail)."
+            },
+            {
+                question: "Which tool is often used to analyze packet captures (pcap files)?",
+                options: ["Wireshark", "Notepad", "Excel", "Paint"],
+                answer: "Wireshark",
+                explanation: "Wireshark is the industry-standard network protocol analyzer for inspecting packet captures."
+            },
+            {
+                question: "What is the default port for HTTPS traffic?",
+                options: ["80", "21", "443", "25"],
+                answer: "443",
+                explanation: "HTTPS uses port 443. HTTP uses port 80."
+            },
+            {
+                question: "What does a 'User-Agent' string in an HTTP header identify?",
+                options: ["The IP address of the server", "The client browser and operating system", "The password of the user", "The encryption method"],
+                answer: "The client browser and operating system",
+                explanation: "The User-Agent string tells the server what browser, version, and OS the client is using."
+            },
+            {
+                question: "Which Network Monitoring technique stores a 'cache' of recent flows to improve performance?",
+                options: ["NetFlow", "Syslog", "SNMP", "NTP"],
+                answer: "NetFlow",
+                explanation: "NetFlow relies on a flow cache to aggregate packets into flows before exporting them to a collector."
+            },
+            {
+                question: "What information does 'Whois' data provide?",
+                options: ["Real-time packet contents", "Domain ownership and registration details", "Firewall rules", "Server CPU load"],
+                answer: "Domain ownership and registration details",
+                explanation: "Whois databases store contact and registration information for domain names and IP address blocks."
+            },
+            {
+                question: "In a tcpdump command, what flag is used to write the output to a file?",
+                options: ["-r", "-w", "-c", "-i"],
+                answer: "-w",
+                explanation: "The '-w' (write) flag directs tcpdump to save the captured packets to a file instead of displaying them on screen."
+            },
+            {
+                question: "Which header field is used in IP to prevent packets from looping endlessly?",
+                options: ["TTL (Time to Live)", "Sequence Number", "Source IP", "Checksum"],
+                answer: "TTL (Time to Live)",
+                explanation: "TTL is a counter that decrements at each hop. If it reaches zero, the packet is discarded."
+            },
+            {
+                question: "What is 'SIEM'?",
+                options: ["Security Information and Event Management", "System Integration and Error Monitoring", "Secure Internet Email Mechanism", "Simple IP Exchange Mode"],
+                answer: "Security Information and Event Management",
+                explanation: "SIEM software aggregates and analyzes log data from across an organization's IT infrastructure."
+            },
+            {
+                question: "Which HTTP method is used to send data to a server to create/update a resource?",
+                options: ["GET", "POST", "HEAD", "OPTIONS"],
+                answer: "POST",
+                explanation: "POST is used to submit data to be processed to a specified resource (e.g., submitting a form)."
+            },
+            {
+                question: "If a NetFlow collector shows a large amount of traffic on port 53, what protocol is likely involved?",
+                options: ["HTTP", "DNS", "SSH", "FTP"],
+                answer: "DNS",
+                explanation: "Port 53 is the standard port for DNS (Domain Name System) traffic."
+            },
+            {
+                question: "What is the function of NTP (Network Time Protocol)?",
+                options: ["To transfer files", "To synchronize clocks on computer systems", "To route packets", "To secure email"],
+                answer: "To synchronize clocks on computer systems",
+                explanation: "Accurate time synchronization (NTP) is crucial for log analysis and correlating events across different devices."
+            },
+            {
+                question: "Which log file would contain information about a successful SSH login?",
+                options: ["Apache access log", "Authentication log (auth.log)", "Windows Update log", "IIS log"],
+                answer: "Authentication log (auth.log)",
+                explanation: "On Linux systems, /var/log/auth.log (or secure) tracks authentication attempts, including SSH logins."
+            },
+            {
+                question: "What is the difference between a 'Packet Capture' and 'NetFlow'?",
+                options: ["NetFlow is full content; Packet Capture is metadata", "Packet Capture provides full payload; NetFlow provides metadata/stats", "They are the same", "Packet Capture is only for wireless"],
+                answer: "Packet Capture provides full payload; NetFlow provides metadata/stats",
+                explanation: "NetFlow summarizes who talked to whom (metadata), while packet capture (pcap) saves the actual content of the conversation."
+            },
+            {
+                question: "In Windows Event Logs, what ID is commonly associated with a successful logon?",
+                options: ["4624", "4625", "1102", "9999"],
+                answer: "4624",
+                explanation: "Event ID 4624 indicates a successful account logon in Windows Security logs."
+            },
+
+            // --- MODULES 26-28: Analyzing Security Data ---
+            {
+                question: "In the Diamond Model of Intrusion Analysis, what represents the 'Adversary'?",
+                options: ["The target of the attack", "The attacker/threat actor", "The tools used", "The physical or logical path"],
+                answer: "The attacker/threat actor",
+                explanation: "The Adversary is the party responsible for the intrusion."
+            },
+            {
+                question: "Which vertex of the Diamond Model represents the tools and techniques used by the attacker?",
+                options: ["Infrastructure", "Victim", "Capability", "Adversary"],
+                answer: "Capability",
+                explanation: "Capability describes the tools, malware, and techniques (TTPs) the adversary uses to attack the victim."
+            },
+            {
+                question: "Which vertex of the Diamond Model represents the physical/logical communication paths (e.g., IP addresses, domain names)?",
+                options: ["Capability", "Infrastructure", "Victim", "Meta-feature"],
+                answer: "Infrastructure",
+                explanation: "Infrastructure includes the IP addresses, domain names, and hardware used to deliver the capability."
+            },
+            {
+                question: "What are the steps of the 'Cyber Kill Chain' in correct order?",
+                options: ["Exploitation, Delivery, Reconnaissance...", "Reconnaissance, Weaponization, Delivery, Exploitation, Installation, C2, Actions on Objectives", "Action, Installation, Delivery...", "Weaponization, Reconnaissance, Exploitation..."],
+                answer: "Reconnaissance, Weaponization, Delivery, Exploitation, Installation, C2, Actions on Objectives",
+                explanation: "The Kill Chain describes the 7 stages of a targeted attack, starting with Reconnaissance and ending with Actions on Objectives."
+            },
+            {
+                question: "In the NIST Incident Response Lifecycle, which phase involves preparing the CSIRT and systems?",
+                options: ["Preparation", "Detection & Analysis", "Containment", "Post-Incident Activity"],
+                answer: "Preparation",
+                explanation: "Preparation involves establishing the CSIRT, training, acquiring tools, and ensuring systems are ready to generate necessary logs."
+            },
+            {
+                question: "What is a 'True Positive' alert?",
+                options: ["An alert generated for benign activity", "No alert generated for benign activity", "An alert verified as an actual security incident", "No alert generated for a real incident"],
+                answer: "An alert verified as an actual security incident",
+                explanation: "True Positive means the system correctly alerted on malicious activity."
+            },
+            {
+                question: "What is a 'False Positive' alert?",
+                options: ["An alert generated for benign (normal) activity", "An alert generated for malicious activity", "Missing a real attack", "Blocking a real user"],
+                answer: "An alert generated for benign (normal) activity",
+                explanation: "False Positive is a 'false alarm'—the system alerted, but the activity was actually harmless."
+            },
+            {
+                question: "What is a 'False Negative'?",
+                options: ["The system alerting on normal traffic", "The system failing to detect an actual attack", "The system correctly ignoring normal traffic", "The system crashing"],
+                answer: "The system failing to detect an actual attack",
+                explanation: "False Negative is the most dangerous scenario: malicious activity occurred, but the security system did NOT generate an alert."
+            },
+            {
+                question: "Which VERIS component describes 'Who' caused the incident?",
+                options: ["Asset", "Action", "Actor", "Attribute"],
+                answer: "Actor",
+                explanation: "In VERIS (Vocabulary for Event Recording and Incident Sharing), the 'Actor' is the entity that causes the incident (e.g., External, Internal, Partner)."
+            },
+            {
+                question: "What is 'Data Normalization' in the context of security analysis?",
+                options: ["Deleting all data", "Simplifying data to remove complexity and make it consistent", "Encrypting data", "Backing up data"],
+                answer: "Simplifying data to remove complexity and make it consistent",
+                explanation: "Normalization ensures that data from different sources (e.g., different firewall brands) uses a common format for easier analysis."
+            },
+            {
+                question: "Which analysis method relies on known signatures to detect threats?",
+                options: ["Deterministic Analysis", "Probabilistic Analysis", "Heuristic Analysis", "Behavioral Analysis"],
+                answer: "Deterministic Analysis",
+                explanation: "Deterministic analysis allows for exact matches based on known facts (signatures), like searching for a specific file hash."
+            },
+            {
+                question: "What does 'C2' stand for in the Cyber Kill Chain?",
+                options: ["Cyber Control", "Command and Control", "Computer Connection", "Critical Capability"],
+                answer: "Command and Control",
+                explanation: "C2 involves the attacker establishing a channel to remotely control the compromised system."
+            },
+            {
+                question: "In the NIST framework, what happens during 'Post-Incident Activity'?",
+                options: ["Stopping the attack", "Lessons learned and reporting", "Detecting the malware", "Reinstalling OS"],
+                answer: "Lessons learned and reporting",
+                explanation: "This phase involves reviewing what happened, how well the team responded, and updating procedures to improve future responses."
+            },
+            {
+                question: "Which phase of the Cyber Kill Chain involves bundling the exploit with a payload (like a PDF with malicious code)?",
+                options: ["Reconnaissance", "Weaponization", "Delivery", "Exploitation"],
+                answer: "Weaponization",
+                explanation: "Weaponization is the coupling of a remote access trojan (RAT) or exploit with a deliverable file type (e.g., PDF, Office doc)."
+            },
+            {
+                question: "What is the definition of 'Chain of Custody'?",
+                options: ["The physical wiring of the network", "The documentation of the seizure, custody, control, transfer, and disposition of evidence", "The link between the attacker and victim", "The sequence of IP headers"],
+                answer: "The documentation of the seizure, custody, control, transfer, and disposition of evidence",
+                explanation: "Chain of Custody helps ensure that evidence is admissible in court by proving it hasn't been tampered with."
+            },
+            {
+                question: "Which type of data provides the most detail for forensic investigation?",
+                options: ["Session Data", "Statistical Data", "Full Packet Capture", "Alert Data"],
+                answer: "Full Packet Capture",
+                explanation: "Full Packet Capture records the complete content of the network traffic, providing the most granular detail for forensics."
+            },
+            {
+                question: "What defines 'Benign' activity?",
+                options: ["Malicious activity", "Harmless / Normal activity", "Unknown activity", "Encrypted activity"],
+                answer: "Harmless / Normal activity",
+                explanation: "Benign means the activity is not harmful."
+            },
+            {
+                question: "What is the purpose of 'Correlation' in a SIEM?",
+                options: ["To compress logs", "To connect related events from different sources to identify a pattern", "To delete old logs", "To speed up the internet"],
+                answer: "To connect related events from different sources to identify a pattern",
+                explanation: "Correlation links seemingly unrelated events (e.g., a door badge scan and a server login) to detect complex threats."
+            },
+            {
+                question: "Which VERIS top-level element describes 'What' actions affected the asset?",
+                options: ["Actor", "Action", "Asset", "Attribute"],
+                answer: "Action",
+                explanation: "Action describes what the threat actor did (e.g., Malware, Hacking, Social, Misuse)."
+            },
+            {
+                question: "What is a 'Playbook' in a SOC?",
+                options: ["A list of games", "A set of instructions or procedures for responding to a specific type of incident", "A password list", "A network map"],
+                answer: "A set of instructions or procedures for responding to a specific type of incident",
+                explanation: "Playbooks provide standardized, step-by-step guides for analysts to follow when handling specific threats (e.g., Phishing Playbook)."
+            },
+            {
+                question: "In the Cyber Kill Chain, what happens during 'Exploitation'?",
+                options: ["The attacker researches the target", "The malicious code executes on the victim's system", "The malware is installed for persistence", "The attacker steals data"],
+                answer: "The malicious code executes on the victim's system",
+                explanation: "Exploitation triggers the vulnerability to execute code on the target system."
+            },
+            {
+                question: "Which NIST phase includes 'Eradication'?",
+                options: ["Preparation", "Detection & Analysis", "Containment, Eradication, and Recovery", "Post-Incident"],
+                answer: "Containment, Eradication, and Recovery",
+                explanation: "This combined phase involves stopping the spread (Containment), removing the threat (Eradication), and restoring systems (Recovery)."
+            },
+            {
+                question: "What is 'Probabilistic Analysis'?",
+                options: ["Exact matching based on signatures", "Using statistical techniques to estimate the likelihood of an event", "Reading logs manually", "Checking hash values"],
+                answer: "Using statistical techniques to estimate the likelihood of an event",
+                explanation: "Probabilistic analysis (like anomaly detection) doesn't rely on exact matches but on the probability that something is abnormal."
+            },
+            {
+                question: "Which component of the Diamond Model connects the Adversary to the Victim?",
+                options: ["Technology-Audience", "Social-Political", "Capability-Infrastructure", "Infrastructure-Victim"],
+                answer: "Social-Political",
+                explanation: "The meta-feature 'Social-Political' represents the relationship or motivation connecting the Adversary and the Victim."
+            },
+            {
+                question: "What is the 'CSIRT'?",
+                options: ["Computer Security Incident Response Team", "Cyber Security Internet Routing Table", "Common Standard for Incident Reporting", "Computer System Internal Repair Tech"],
+                answer: "Computer Security Incident Response Team",
+                explanation: "CSIRT is the group responsible for receiving, reviewing, and responding to computer security incident reports."
+            },
+            {
+                question: "Which term describes the time between the infection and the detection of the threat?",
+                options: ["Dwell Time", "Ping Time", "Uptime", "Lag"],
+                answer: "Dwell Time",
+                explanation: "Dwell time is the duration a threat actor has access to a network before they are detected and removed."
+            },
+            {
+                question: "What is 'Hacking' in the context of VERIS?",
+                options: ["Any use of computers", "Attempts to intentionally access or harm information assets by circumventing security", "Writing code", "Installing software"],
+                answer: "Attempts to intentionally access or harm information assets by circumventing security",
+                explanation: "In VERIS, Hacking is defined as all attempts to intentionally access or harm information assets by circumventing logical security mechanisms."
+            },
+            {
+                question: "In the Cyber Kill Chain, what is 'Delivery'?",
+                options: ["Creating the malware", "Transmitting the weapon to the target environment", "Stealing the data", "Controlling the system"],
+                answer: "Transmitting the weapon to the target environment",
+                explanation: "Delivery is the transmission of the weaponized object (e.g., sending a phishing email with a link or attachment)."
+            },
+            {
+                question: "Which alerting status is the goal of a finely tuned SIEM?",
+                options: ["High False Positives", "High True Positives and Low False Positives", "High False Negatives", "Zero Alerts"],
+                answer: "High True Positives and Low False Positives",
+                explanation: "The goal is to maximize the detection of real threats (True Positives) while minimizing noise (False Positives)."
+            },
+            {
+                question: "What is 'Timestamp' essential for in log analysis?",
+                options: ["Knowing who created the log", "Establishing a timeline and sequencing events", "Encrypting the log", "Saving space"],
+                answer: "Establishing a timeline and sequencing events",
+                explanation: "Timestamps allow analysts to reconstruct the sequence of events across multiple devices to understand what happened and when."
+            },
+            {
+                question: "In the Diamond Model, what is a 'Meta-feature'?",
+                options: ["An extra vertex", "Additional information describing the event (e.g., Timestamp, Phase, Result)", "The core axis", "The victim's name"],
+                answer: "Additional information describing the event (e.g., Timestamp, Phase, Result)",
+                explanation: "Meta-features provide context such as timestamp, phase, result, direction, method, and resources."
+            },
+            {
+                question: "What is the purpose of 'Containment' in incident response?",
+                options: ["To delete evidence", "To limit the extent of the incident and prevent further damage", "To analyze the malware", "To punish the attacker"],
+                answer: "To limit the extent of the incident and prevent further damage",
+                explanation: "Containment (e.g., disconnecting a server) stops the attacker from moving laterally or stealing more data."
+            },
+            {
+                question: "Which tool is primarily used for querying DNS records?",
+                options: ["ping", "nslookup / dig", "traceroute", "netstat"],
+                answer: "nslookup / dig",
+                explanation: "nslookup (Windows) and dig (Linux) are CLI tools used to query DNS servers for records."
+            },
+            {
+                question: "What does 'Actions on Objectives' represent in the Kill Chain?",
+                options: ["The attacker gives up", "The attacker fulfills their original goal (e.g., data exfiltration, encryption)", "The attacker installs a backdoor", "The attacker scans the network"],
+                answer: "The attacker fulfills their original goal (e.g., data exfiltration, encryption)",
+                explanation: "This is the final stage where the adversary achieves their mission, such as stealing intellectual property or encrypting data for ransom."
+            },
+            {
+                question: "Why is 'Baseline' important in anomaly detection?",
+                options: ["It encrypts the traffic", "It defines what 'normal' looks like so deviations can be detected", "It blocks all traffic", "It speeds up the network"],
+                answer: "It defines what 'normal' looks like so deviations can be detected",
+                explanation: "Without a baseline of normal behavior, it is impossible to statistically determine if current activity is anomalous."
+            }
+        ];
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function App() {
+            const [started, setStarted] = React.useState(false);
+            const [questions, setQuestions] = React.useState([]);
+            const [currentIndex, setCurrentIndex] = React.useState(0);
+            const [score, setScore] = React.useState(0);
+            const [showScore, setShowScore] = React.useState(false);
+            const [selectedOption, setSelectedOption] = React.useState(null);
+            const [isCorrect, setIsCorrect] = React.useState(null);
+
+            React.useEffect(() => {
+                setQuestions(shuffleArray([...questionsData]));
+            }, []);
+
+            const startQuiz = () => {
+                setStarted(true);
+            };
+
+            const handleOptionClick = (option) => {
+                if (selectedOption) return;
+                setSelectedOption(option);
+                const correct = option === questions[currentIndex].answer;
+                setIsCorrect(correct);
+                if (correct) {
+                    setScore(score + 1);
+                }
+            };
+
+            const handleNext = () => {
+                const nextQuestion = currentIndex + 1;
+                if (nextQuestion < questions.length) {
+                    setCurrentIndex(nextQuestion);
+                    setSelectedOption(null);
+                    setIsCorrect(null);
+                } else {
+                    setShowScore(true);
+                }
+            };
+
+            const restartQuiz = () => {
+                setQuestions(shuffleArray([...questionsData]));
+                setCurrentIndex(0);
+                setScore(0);
+                setShowScore(false);
+                setSelectedOption(null);
+                setIsCorrect(null);
+                setStarted(false);
+            };
+
+            if (!started) {
+                return (
+                    <div className="min-h-screen flex items-center justify-center p-4">
+                        <div className="bg-white p-8 rounded-2xl shadow-xl max-w-lg w-full text-center fade-in">
+                            <div className="mb-6 text-orange-600">
+                                <i className="fas fa-search-plus text-6xl"></i>
+                            </div>
+                            <h1 className="text-3xl font-bold text-slate-800 mb-4">CyberOps Modules 24-28</h1>
+                            <p className="text-slate-600 mb-8">
+                                Protocols, Log Files, and Analyzing Security Data.
+                                <br/><span className="font-semibold">{questionsData.length} Questions</span>
+                            </p>
+                            <button 
+                                onClick={startQuiz}
+                                className="w-full bg-orange-600 hover:bg-orange-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300 shadow-lg transform hover:-translate-y-1"
+                            >
+                                Start Exam
+                            </button>
+                        </div>
+                    </div>
+                );
+            }
+
+            if (showScore) {
+                const percentage = Math.round((score / questions.length) * 100);
+                let message = "";
+                let color = "";
+                
+                if (percentage >= 80) {
+                    message = "Excellent! You are ready for the SOC.";
+                    color = "text-green-600";
+                } else if (percentage >= 60) {
+                    message = "Good effort. Review the Diamond Model & Kill Chain.";
+                    color = "text-yellow-600";
+                } else {
+                    message = "Keep studying. Focus on log types and alert definitions.";
+                    color = "text-red-600";
+                }
+
+                return (
+                    <div className="min-h-screen flex items-center justify-center p-4">
+                        <div className="bg-white p-8 rounded-2xl shadow-xl max-w-lg w-full text-center fade-in">
+                            <h2 className="text-2xl font-bold text-slate-800 mb-4">Quiz Completed</h2>
+                            <div className="text-6xl font-bold text-orange-600 mb-4">{score} / {questions.length}</div>
+                            <div className={`text-xl font-semibold mb-6 ${color}`}>
+                                {percentage}% - {message}
+                            </div>
+                            <button 
+                                onClick={restartQuiz}
+                                className="bg-slate-800 hover:bg-slate-900 text-white font-bold py-3 px-6 rounded-lg transition duration-300"
+                            >
+                                Restart Quiz
+                            </button>
+                        </div>
+                    </div>
+                );
+            }
+
+            const currentQuestion = questions[currentIndex];
+
+            return (
+                <div className="min-h-screen py-8 px-4 flex flex-col items-center justify-center">
+                    <div className="bg-white p-6 md:p-8 rounded-2xl shadow-xl max-w-2xl w-full fade-in relative overflow-hidden">
+                        {/* Progress Bar */}
+                        <div className="absolute top-0 left-0 w-full h-2 bg-gray-200">
+                            <div 
+                                className="h-full bg-orange-500 transition-all duration-300"
+                                style={{ width: `${((currentIndex) / questions.length) * 100}%` }}
+                            ></div>
+                        </div>
+
+                        <div className="flex justify-between items-center mb-6 mt-2">
+                            <span className="text-slate-500 font-semibold text-sm">Question {currentIndex + 1} of {questions.length}</span>
+                            <span className="bg-orange-100 text-orange-800 text-xs font-bold px-2 py-1 rounded">Score: {score}</span>
+                        </div>
+
+                        <h2 className="text-xl md:text-2xl font-bold text-slate-800 mb-6">
+                            {currentQuestion.question}
+                        </h2>
+
+                        <div className="space-y-3">
+                            {currentQuestion.options.map((option, index) => {
+                                let btnClass = "w-full text-left p-4 rounded-lg border-2 transition-all duration-200 font-medium ";
+                                if (selectedOption === option) {
+                                    if (isCorrect) {
+                                        btnClass += "bg-green-100 border-green-500 text-green-800";
+                                    } else {
+                                        btnClass += "bg-red-100 border-red-500 text-red-800";
+                                    }
+                                } else if (selectedOption && option === currentQuestion.answer) {
+                                    btnClass += "bg-green-100 border-green-500 text-green-800";
+                                } else {
+                                    btnClass += "bg-white border-slate-200 hover:border-orange-400 hover:bg-slate-50 text-slate-700";
+                                }
+                                return (
+                                    <button 
+                                        key={index} 
+                                        onClick={() => handleOptionClick(option)}
+                                        disabled={!!selectedOption}
+                                        className={btnClass}
+                                    >
+                                        <div className="flex justify-between items-center">
+                                            <span>{option}</span>
+                                            {selectedOption === option && isCorrect && <i className="fas fa-check-circle text-green-600"></i>}
+                                            {selectedOption === option && !isCorrect && <i className="fas fa-times-circle text-red-600"></i>}
+                                        </div>
+                                    </button>
+                                );
+                            })}
+                        </div>
+
+                        {/* Explanation Section */}
+                        {selectedOption && (
+                            <div className="mt-6 p-4 bg-orange-50 border-l-4 border-orange-500 text-slate-700 rounded-r-lg slide-down">
+                                <p className="font-bold text-orange-700 mb-1 flex items-center">
+                                    <i className="fas fa-lightbulb mr-2 text-yellow-500"></i>
+                                    Explanation:
+                                </p>
+                                <p className="text-sm md:text-base">{currentQuestion.explanation}</p>
+                            </div>
+                        )}
+
+                        <div className="flex justify-between items-center mt-8">
+                            <button 
+                                onClick={restartQuiz}
+                                className="bg-slate-500 hover:bg-slate-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300 mr-2"
+                            >
+                                Reset
+                            </button>
+                            <button 
+                                onClick={handleNext}
+                                className="bg-orange-600 hover:bg-orange-700 text-white font-bold py-2 px-6 rounded-lg transition duration-300"
+                                disabled={!selectedOption}
+                            >
+                                {currentIndex + 1 === questions.length ? "Finish" : "Next"}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>

@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberOps Modules 18-23 Interactive Exam</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #f0f4f8; }
+        .fade-in { animation: fadeIn 0.5s ease-in; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .slide-down { animation: slideDown 0.3s ease-out forwards; }
+        @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const questionsData = [
+            // --- MODULES 18-20: Network Defense ---
+            {
+                question: "Which access control model is the strictest and is commonly used in military or mission-critical applications?",
+                options: ["Discretionary Access Control (DAC)", "Mandatory Access Control (MAC)", "Role-Based Access Control (RBAC)", "Attribute-Based Access Control (ABAC)"],
+                answer: "Mandatory Access Control (MAC)",
+                explanation: "MAC is the strictest model where access rights are regulated by a central authority based on security clearance levels."
+            },
+            {
+                question: "Which access control model allows users to control access to their own data?",
+                options: ["MAC", "DAC", "RBAC", "ABAC"],
+                answer: "Discretionary Access Control (DAC)",
+                explanation: "In DAC, the owner of the object (file, data) decides who has access to it, typically using Access Control Lists (ACLs)."
+            },
+            {
+                question: "What is another name for Non-Discretionary Access Control?",
+                options: ["Rule-Based Access Control", "Role-Based Access Control (RBAC)", "Mandatory Access Control", "Attribute-Based Access Control"],
+                answer: "Role-Based Access Control (RBAC)",
+                explanation: "RBAC grants access based on the user's role and responsibilities within the organization, not their individual identity."
+            },
+            {
+                question: "Which component of AAA involves verifying the identity of a user (e.g., passwords, biometrics)?",
+                options: ["Authorization", "Accounting", "Authentication", "Auditing"],
+                answer: "Authentication",
+                explanation: "Authentication answers the question 'Who are you?'. It validates the identity of the user attempting to access the system."
+            },
+            {
+                question: "Which component of AAA determines what a user can do once they are logged in?",
+                options: ["Authorization", "Authentication", "Accounting", "Assessment"],
+                answer: "Authorization",
+                explanation: "Authorization determines permissions and privileges, such as read, write, or execute access, after identity is verified."
+            },
+            {
+                question: "Which component of AAA tracks user actions, such as what they accessed and for how long?",
+                options: ["Authorization", "Authentication", "Accounting", "Administration"],
+                answer: "Accounting",
+                explanation: "Accounting (or Auditing) logs user activities to create a trail for security review and compliance."
+            },
+            {
+                question: "Why is asset management a critical function of a growing organization against security threats?",
+                options: ["It increases network speed", "It identifies the ever-increasing attack surface", "It automatically patches systems", "It reduces the cost of hardware"],
+                answer: "It identifies the ever-increasing attack surface",
+                explanation: "You cannot protect what you don't know you have. Asset management helps identify all devices, which represent the potential attack surface."
+            },
+            {
+                question: "What is the term for the practice of implementing multiple layers of security controls?",
+                options: ["Single Sign-On", "Defense-in-Depth", "Access Control List", "VPN Tunneling"],
+                answer: "Defense-in-Depth",
+                explanation: "Defense-in-Depth uses multiple layers of security (firewalls, IDS, training, etc.) so that if one fails, others provide protection."
+            },
+            {
+                question: "Which tool is commonly used to scan a network for live hosts and open ports?",
+                options: ["Wireshark", "Nmap", "Snort", "Netcat"],
+                answer: "Nmap",
+                explanation: "Nmap (Network Mapper) is a powerful utility used for network discovery and security auditing."
+            },
+            {
+                question: "What involves establishing a baseline of typical network traffic patterns to detect anomalies?",
+                options: ["Network Profiling", "Penetration Testing", "Social Engineering", "Phishing"],
+                answer: "Network Profiling",
+                explanation: "Network profiling creates a baseline of 'normal' behavior so that deviations (anomalies) can be flagged as potential threats."
+            },
+            {
+                question: "In the context of risk management, what is a 'Vulnerability'?",
+                options: ["A potential danger to an asset", "A weakness in a system that can be exploited", "The likelihood of a threat occurring", "A measure of the value of an asset"],
+                answer: "A weakness in a system that can be exploited",
+                explanation: "A vulnerability is a flaw or weakness in system security procedures, design, implementation, or internal controls that could be exercised."
+            },
+            {
+                question: "Which CVSS metric group represents the intrinsic characteristics of a vulnerability that are constant over time?",
+                options: ["Temporal", "Environmental", "Base", "Critical"],
+                answer: "Base",
+                explanation: "The Base metric group represents the intrinsic qualities of a vulnerability that do not change over time or environment."
+            },
+            {
+                question: "What is the primary purpose of a SIEM (Security Information and Event Management) system?",
+                options: ["To block all traffic", "To collect and analyze logs from multiple sources", "To route network packets", "To encrypt hard drives"],
+                answer: "To collect and analyze logs from multiple sources",
+                explanation: "SIEM systems aggregate logs from various devices (firewalls, servers, etc.) to correlate events and detect security incidents."
+            },
+            {
+                question: "Which phase of the NIST Cybersecurity Framework involves developing and implementing appropriate safeguards?",
+                options: ["Identify", "Protect", "Detect", "Respond"],
+                answer: "Protect",
+                explanation: "The 'Protect' function outlines appropriate safeguards to ensure delivery of critical infrastructure services and limit the impact of a cybersecurity event."
+            },
+            {
+                question: "Which phase of the NIST Cybersecurity Framework involves developing and implementing appropriate activities to identify the occurrence of a cybersecurity event?",
+                options: ["Protect", "Detect", "Respond", "Recover"],
+                answer: "Detect",
+                explanation: "The 'Detect' function defines the appropriate activities to identify the occurrence of a cybersecurity event."
+            },
+            {
+                question: "What acts as a rule-based gatekeeper for traffic entering or leaving a network?",
+                options: ["Switch", "Hub", "Firewall", "Repeater"],
+                answer: "Firewall",
+                explanation: "A firewall monitors and controls incoming and outgoing network traffic based on predetermined security rules."
+            },
+            {
+                question: "Which type of firewall inspects traffic based on the state of the connection?",
+                options: ["Packet Filtering", "Stateful Inspection", "Proxy", "Next-Generation"],
+                answer: "Stateful Inspection",
+                explanation: "Stateful inspection firewalls track the state of active connections and determine which network packets to allow through."
+            },
+            {
+                question: "What is a 'DMZ' in network security?",
+                options: ["A highly secure internal zone", "A buffer zone between the internet and the internal network", "A zone for data mining", "A fast network lane"],
+                answer: "A buffer zone between the internet and the internal network",
+                explanation: "A DMZ (Demilitarized Zone) is a physical or logical subnetwork that contains and exposes an organization's external-facing services to an untrusted network."
+            },
+            {
+                question: "Which protocol is used to securely manage network devices remotely?",
+                options: ["Telnet", "SSH", "HTTP", "FTP"],
+                answer: "SSH",
+                explanation: "SSH (Secure Shell) provides a secure channel over an unsecured network, unlike Telnet which sends data in plain text."
+            },
+            {
+                question: "What is the purpose of Network Address Translation (NAT)?",
+                options: ["To encrypt data", "To map private IP addresses to public IP addresses", "To filter malware", "To speed up downloads"],
+                answer: "To map private IP addresses to public IP addresses",
+                explanation: "NAT allows multiple devices on a private network to share a single public IP address, conserving IPv4 addresses and hiding internal IPs."
+            },
+            {
+                question: "Which access control model uses attributes like time of day, location, and subject role to grant access?",
+                options: ["DAC", "MAC", "RBAC", "ABAC"],
+                answer: "Attribute-Based Access Control (ABAC)",
+                explanation: "ABAC is a dynamic model that uses policies combining attributes of the user, resource, and environment."
+            },
+            {
+                question: "What is the difference between a vulnerability and a threat?",
+                options: ["They are the same", "A threat is a weakness; a vulnerability is a potential danger", "A vulnerability is a weakness; a threat is a potential danger", "Vulnerabilities are external; threats are internal"],
+                answer: "A vulnerability is a weakness; a threat is a potential danger",
+                explanation: "A vulnerability is a flaw in the system. A threat is the potential for a threat-source to exploit that vulnerability."
+            },
+            {
+                question: "Which server profile element involves knowing the OS version and installed patches?",
+                options: ["Listening Ports", "Service Accounts", "System Configuration", "User Behavior"],
+                answer: "System Configuration",
+                explanation: "Profiling system configuration involves documenting the OS, patch levels, and software versions running on the server."
+            },
+            {
+                question: "What does 'Least Privilege' mean?",
+                options: ["Users are given the highest level of access", "Users are given only the access necessary to perform their job", "Users have no access", "Admins share passwords"],
+                answer: "Users are given only the access necessary to perform their job",
+                explanation: "The principle of least privilege states that a subject should be given only those privileges needed for it to complete its task."
+            },
+            {
+                question: "Which type of malware records keystrokes to steal passwords?",
+                options: ["Ransomware", "Keylogger", "Adware", "Botnet"],
+                answer: "Keylogger",
+                explanation: "Keyloggers are surveillance software that has the capability to record every keystroke you make to a log file."
+            },
+            {
+                question: "What is the main function of an Intrusion Detection System (IDS)?",
+                options: ["To block attacks", "To detect and alert on suspicious activity", "To encrypt traffic", "To authenticate users"],
+                answer: "To detect and alert on suspicious activity",
+                explanation: "An IDS monitors network traffic for suspicious activity and issues alerts when such activity is discovered. It typically does not block traffic."
+            },
+            {
+                question: "What distinguishes an IPS (Intrusion Prevention System) from an IDS?",
+                options: ["IPS allows all traffic", "IPS can actively block malicious traffic", "IPS is slower", "IPS is only for wireless"],
+                answer: "IPS can actively block malicious traffic",
+                explanation: "While an IDS detects and alerts, an IPS is placed inline and can actively stop or block the detected malicious traffic."
+            },
+            {
+                question: "What is 'Sandboxing'?",
+                options: ["Playing in the sand", "Isolating code execution in a safe environment", "Encrypting email", "Cleaning hard drives"],
+                answer: "Isolating code execution in a safe environment",
+                explanation: "Sandboxing is a security mechanism for separating running programs, often used to execute untested or untrusted code without risking the host machine."
+            },
+            {
+                question: "Which metric group in CVSS relies on the user's specific environment configuration?",
+                options: ["Base", "Temporal", "Environmental", "Global"],
+                answer: "Environmental",
+                explanation: "Environmental metrics customize the CVSS score based on the specific IT environment and importance of the affected asset to the user."
+            },
+            {
+                question: "What is a common method for mitigating risks?",
+                options: ["Risk Acceptance", "Risk Avoidance", "Risk Transfer", "All of the above"],
+                answer: "All of the above",
+                explanation: "Risk can be managed by Accepting it, Avoiding it, Transferring it (insurance), or Mitigating it (controls)."
+            },
+
+            // --- MODULES 21-23: Cryptography & Endpoint Protection ---
+            {
+                question: "Which cryptographic service ensures that data has not been altered in transit?",
+                options: ["Confidentiality", "Integrity", "Availability", "Non-repudiation"],
+                answer: "Integrity",
+                explanation: "Integrity guarantees that the data received is exactly the same as the data sent, often achieved using hashing."
+            },
+            {
+                question: "What does a hash function output?",
+                options: ["The original data", "A fixed-length string of characters (digest)", "An encrypted password", "A public key"],
+                answer: "A fixed-length string of characters (digest)",
+                explanation: "A hash function takes input of any length and produces a fixed-length output, known as a digest or hash."
+            },
+            {
+                question: "Which type of encryption uses the SAME key for both encryption and decryption?",
+                options: ["Asymmetric", "Symmetric", "Hashing", "PKI"],
+                answer: "Symmetric",
+                explanation: "Symmetric encryption (shared secret) uses a single key that must be known by both the sender and the receiver."
+            },
+            {
+                question: "Which type of encryption uses a public key and a private key pair?",
+                options: ["Asymmetric", "Symmetric", "Block Cipher", "Stream Cipher"],
+                answer: "Asymmetric",
+                explanation: "Asymmetric encryption uses two keys: a public key for encryption and a private key for decryption (or vice versa for signatures)."
+            },
+            {
+                question: "What is the primary purpose of a Digital Signature?",
+                options: ["To encrypt the message content", "To provide authentication, integrity, and non-repudiation", "To compress the file size", "To hide the sender's IP"],
+                answer: "To provide authentication, integrity, and non-repudiation",
+                explanation: "Digital signatures prove the identity of the sender (authenticity), ensure data hasn't changed (integrity), and prevent denial of sending (non-repudiation)."
+            },
+            {
+                question: "In a PKI system, what is the role of the Certificate Authority (CA)?",
+                options: ["To store private keys", "To issue and verify digital certificates", "To encrypt email", "To route traffic"],
+                answer: "To issue and verify digital certificates",
+                explanation: "The CA is a trusted third party that validates the identity of a user and issues a digital certificate binding that identity to a public key."
+            },
+            {
+                question: "Which algorithm is a popular Symmetric encryption algorithm?",
+                options: ["RSA", "ECC", "AES", "SHA-256"],
+                answer: "AES",
+                explanation: "AES (Advanced Encryption Standard) is a widely used symmetric encryption algorithm."
+            },
+            {
+                question: "Which algorithm is a popular Asymmetric encryption algorithm?",
+                options: ["AES", "DES", "RSA", "MD5"],
+                answer: "RSA",
+                explanation: "RSA (Rivest–Shamir–Adleman) is a standard asymmetric algorithm used for secure data transmission."
+            },
+            {
+                question: "What is the main weakness of Symmetric encryption?",
+                options: ["It is slow", "Key management and distribution", "It cannot encrypt large files", "It is easily cracked"],
+                answer: "Key management and distribution",
+                explanation: "The challenge is securely sharing the single secret key with the recipient without it being intercepted."
+            },
+            {
+                question: "Which hashing algorithm is considered weak and susceptible to collisions?",
+                options: ["SHA-256", "SHA-3", "MD5", "AES"],
+                answer: "MD5",
+                explanation: "MD5 is an older hashing algorithm that is now considered broken due to the ease of generating collisions (two inputs producing the same hash)."
+            },
+            {
+                question: "What is HMAC (Hash-based Message Authentication Code) used for?",
+                options: ["Data masking", "Providing integrity and authenticity using a secret key", "Public key distribution", "Wireless routing"],
+                answer: "Providing integrity and authenticity using a secret key",
+                explanation: "HMAC combines a cryptographic hash function with a secret cryptographic key to verify both data integrity and authenticity."
+            },
+            {
+                question: "What is 'Non-repudiation'?",
+                options: ["The ability to deny an action", "The assurance that the sender cannot deny sending a message", "Hiding the message origin", "Encrypting the message"],
+                answer: "The assurance that the sender cannot deny sending a message",
+                explanation: "Non-repudiation provides legal proof that a specific party performed an action or sent a message."
+            },
+            {
+                question: "Which standard is X.509 associated with?",
+                options: ["Firewall rules", "Digital Certificates", "Encryption keys", "Wireless security"],
+                answer: "Digital Certificates",
+                explanation: "X.509 is the standard format for public key certificates used in PKI (Public Key Infrastructure)."
+            },
+            {
+                question: "What is the purpose of a 'Salt' in password hashing?",
+                options: ["To make the password shorter", "To make the hash easier to read", "To prevent rainbow table attacks", "To encrypt the username"],
+                answer: "To prevent rainbow table attacks",
+                explanation: "Salting adds random data to the input of a hash function to ensure that identical passwords result in different hashes, defeating pre-computed rainbow tables."
+            },
+            {
+                question: "Which IPSec protocol provides confidentiality (encryption)?",
+                options: ["AH (Authentication Header)", "ESP (Encapsulating Security Payload)", "IKE", "GRE"],
+                answer: "ESP (Encapsulating Security Payload)",
+                explanation: "ESP provides confidentiality through encryption, as well as origin authentication and integrity. AH only provides authentication and integrity."
+            },
+            {
+                question: "Which IPSec protocol provides integrity and authentication but NOT encryption?",
+                options: ["AH (Authentication Header)", "ESP", "SSL", "TLS"],
+                answer: "AH (Authentication Header)",
+                explanation: "AH ensures the sender is who they say they are and the data hasn't changed, but the data remains readable (not encrypted)."
+            },
+            {
+                question: "What is 'Steganography'?",
+                options: ["Scrambling data", "Hiding data within other data (like an image)", "Compressing data", "Deleting logs"],
+                answer: "Hiding data within other data (like an image)",
+                explanation: "Steganography is the practice of concealing a message, image, or file within another message, image, or file."
+            },
+            {
+                question: "Which component of PKI stores a list of revoked certificates?",
+                options: ["CRL (Certificate Revocation List)", "CA", "RA", "Public Key"],
+                answer: "CRL (Certificate Revocation List)",
+                explanation: "A CRL is a list of digital certificates that have been revoked by the issuing CA before their scheduled expiration date."
+            },
+            {
+                question: "What is the difference between HIDS and HIPS?",
+                options: ["HIDS blocks traffic; HIPS monitors", "HIDS monitors/alerts; HIPS actively blocks", "They are the same", "HIPS is only for servers"],
+                answer: "HIDS monitors/alerts; HIPS actively blocks",
+                explanation: "Host-based Intrusion Detection (HIDS) alerts on suspicious activity, while Host-based Intrusion Prevention (HIPS) can take action to stop it."
+            },
+            {
+                question: "What is 'Antimalware'?",
+                options: ["Software that creates viruses", "Software designed to detect, prevent, and remove malicious software", "A hardware firewall", "A network protocol"],
+                answer: "Software designed to detect, prevent, and remove malicious software",
+                explanation: "Antimalware is a broader category than antivirus, designed to protect against viruses, ransomware, spyware, and other threats."
+            },
+            {
+                question: "Which generation of antimalware uses behavioral analysis rather than just signatures?",
+                options: ["Legacy / Traditional", "Next-Generation", "Firewall-based", "Manual"],
+                answer: "Next-Generation",
+                explanation: "Next-Generation endpoint protection uses AI and behavioral analysis to detect unknown (zero-day) threats, unlike signature-based legacy tools."
+            },
+            {
+                question: "What is the 'Root of Trust' in a TPM (Trusted Platform Module)?",
+                options: ["The administrator password", "Hardware-based security functions", "The cloud server", "The antivirus software"],
+                answer: "Hardware-based security functions",
+                explanation: "A TPM is a hardware chip on the motherboard that provides a secure root of trust for cryptographic operations and key storage."
+            },
+            {
+                question: "What implies that data is accessible only to authorized parties?",
+                options: ["Availability", "Integrity", "Confidentiality", "Authenticity"],
+                answer: "Confidentiality",
+                explanation: "Confidentiality ensures privacy so that unauthorized individuals cannot view the data."
+            },
+            {
+                question: "Which process converts readable plaintext into unreadable ciphertext?",
+                options: ["Decryption", "Hashing", "Encryption", "Salting"],
+                answer: "Encryption",
+                explanation: "Encryption is the process of encoding information so that only authorized parties can access it."
+            },
+            {
+                question: "What is the 'Key Space' in cryptography?",
+                options: ["The physical room where keys are stored", "The total number of possible key values", "The length of the password", "The time it takes to crack a code"],
+                answer: "The total number of possible key values",
+                explanation: "Key space refers to the set of all possible permutations of a key. A larger key space makes brute-force attacks harder."
+            },
+            {
+                question: "Which attack involves trying every possible key combination?",
+                options: ["Phishing", "Social Engineering", "Brute Force", "Man-in-the-Middle"],
+                answer: "Brute Force",
+                explanation: "A brute force attack systematically checks all possible keys or passwords until the correct one is found."
+            },
+            {
+                question: "What is 'Masking'?",
+                options: ["Hiding characters (e.g., replacing with asterisks)", "Deleting data", "Encrypting data", "Compressing data"],
+                answer: "Hiding characters (e.g., replacing with asterisks)",
+                explanation: "Masking obscures specific data within a database to protect it from unauthorized viewing while maintaining usability (e.g., showing only last 4 digits of a credit card)."
+            },
+            {
+                question: "Which wireless security protocol is currently considered the most secure?",
+                options: ["WEP", "WPA", "WPA2", "WPA3"],
+                answer: "WPA3",
+                explanation: "WPA3 is the latest Wi-Fi security standard, offering better encryption and protection against brute-force attacks than WPA2."
+            },
+            {
+                question: "What is a 'Grey Hat' hacker?",
+                options: ["A malicious hacker", "An ethical hacker", "Someone who may violate laws but not for malicious gain", "A state-sponsored spy"],
+                answer: "Someone who may violate laws but not for malicious gain",
+                explanation: "Grey hats fall between white and black hats. They may find vulnerabilities without permission but usually report them rather than exploit them."
+            },
+            {
+                question: "What is the purpose of 'Network Segmentation'?",
+                options: ["To make the network flatter", "To divide the network into smaller parts to improve security and performance", "To use more cables", "To disable firewalls"],
+                answer: "To divide the network into smaller parts to improve security and performance",
+                explanation: "Segmentation limits lateral movement of attackers. If one segment is compromised, the others remain secure."
+            },
+            {
+                question: "Which protocol is used for secure web browsing?",
+                options: ["HTTP", "FTP", "HTTPS", "SMTP"],
+                answer: "HTTPS",
+                explanation: "HTTPS (Hypertext Transfer Protocol Secure) encrypts HTTP traffic using TLS/SSL."
+            },
+            {
+                question: "What does 'Obfuscation' mean in security?",
+                options: ["Making code difficult for humans to understand", "Making code faster", "Deleting comments", "Organizing files"],
+                answer: "Making code difficult for humans to understand",
+                explanation: "Obfuscation involves making something obscure or unclear to prevent reverse engineering or analysis."
+            },
+            {
+                question: "Which endpoint protection feature prevents unauthorized applications from running?",
+                options: ["Application Whitelisting", "Antivirus", "Firewall", "Patching"],
+                answer: "Application Whitelisting",
+                explanation: "Whitelisting allows only pre-approved applications to run, blocking everything else by default."
+            },
+            {
+                question: "What is 'NAC' (Network Access Control)?",
+                options: ["A routing protocol", "A method to enforce security policy on devices before they access the network", "A type of cable", "A virus"],
+                answer: "A method to enforce security policy on devices before they access the network",
+                explanation: "NAC checks the health of a device (e.g., antivirus status, patch level) before allowing it to connect to the network."
+            },
+            {
+                question: "What is the 'Avalanche Effect' in hashing?",
+                options: ["Snow crashing servers", "A small change in input results in a drastically different output", "Hashes getting larger over time", "The speed of hashing"],
+                answer: "A small change in input results in a drastically different output",
+                explanation: "A good hash function has a strong avalanche effect, where changing just one bit of the input changes the hash completely."
+            },
+            {
+                question: "Which digital certificate standard is used for signing email?",
+                options: ["S/MIME", "HTTPS", "SSH", "IPSec"],
+                answer: "S/MIME",
+                explanation: "S/MIME (Secure/Multipurpose Internet Mail Extensions) is a standard for public key encryption and signing of MIME data (email)."
+            },
+            {
+                question: "What is the main purpose of a Proxy Server?",
+                options: ["To store files", "To act as an intermediary for requests from clients seeking resources", "To generate keys", "To create backups"],
+                answer: "To act as an intermediary for requests from clients seeking resources",
+                explanation: "Proxies can provide anonymity, content filtering, and caching by handling requests on behalf of the client."
+            },
+            {
+                question: "Which threat involves an attacker intercepting communication between two parties?",
+                options: ["DoS", "Phishing", "Man-in-the-Middle (MitM)", "SQL Injection"],
+                answer: "Man-in-the-Middle (MitM)",
+                explanation: "In a MitM attack, the attacker secretly relays and possibly alters the communication between two parties who believe they are communicating directly."
+            },
+            {
+                question: "What is a 'Logic Bomb'?",
+                options: ["A physical explosive", "Malicious code inserted into software that executes when specific conditions are met", "A failed login attempt", "A type of firewall"],
+                answer: "Malicious code inserted into software that executes when specific conditions are met",
+                explanation: "A logic bomb remains dormant until a specific trigger occurs (e.g., a specific date or an employee being fired)."
+            }
+        ];
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function App() {
+            const [started, setStarted] = React.useState(false);
+            const [questions, setQuestions] = React.useState([]);
+            const [currentIndex, setCurrentIndex] = React.useState(0);
+            const [score, setScore] = React.useState(0);
+            const [showScore, setShowScore] = React.useState(false);
+            const [selectedOption, setSelectedOption] = React.useState(null);
+            const [isCorrect, setIsCorrect] = React.useState(null);
+
+            React.useEffect(() => {
+                setQuestions(shuffleArray([...questionsData]));
+            }, []);
+
+            const startQuiz = () => {
+                setStarted(true);
+            };
+
+            const handleOptionClick = (option) => {
+                if (selectedOption) return;
+                setSelectedOption(option);
+                const correct = option === questions[currentIndex].answer;
+                setIsCorrect(correct);
+                if (correct) {
+                    setScore(score + 1);
+                }
+            };
+
+            const handleNext = () => {
+                const nextQuestion = currentIndex + 1;
+                if (nextQuestion < questions.length) {
+                    setCurrentIndex(nextQuestion);
+                    setSelectedOption(null);
+                    setIsCorrect(null);
+                } else {
+                    setShowScore(true);
+                }
+            };
+
+            const restartQuiz = () => {
+                setQuestions(shuffleArray([...questionsData]));
+                setCurrentIndex(0);
+                setScore(0);
+                setShowScore(false);
+                setSelectedOption(null);
+                setIsCorrect(null);
+                setStarted(false);
+            };
+
+            if (!started) {
+                return (
+                    <div className="min-h-screen flex items-center justify-center p-4">
+                        <div className="bg-white p-8 rounded-2xl shadow-xl max-w-lg w-full text-center fade-in">
+                            <div className="mb-6 text-purple-600">
+                                <i className="fas fa-network-wired text-6xl"></i>
+                            </div>
+                            <h1 className="text-3xl font-bold text-slate-800 mb-4">CyberOps Modules 18-23</h1>
+                            <p className="text-slate-600 mb-8">
+                                Network Defense, Cryptography, and Endpoint Protection.
+                                <br/><span className="font-semibold">{questionsData.length} Questions</span>
+                            </p>
+                            <button 
+                                onClick={startQuiz}
+                                className="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300 shadow-lg transform hover:-translate-y-1"
+                            >
+                                Start Exam
+                            </button>
+                        </div>
+                    </div>
+                );
+            }
+
+            if (showScore) {
+                const percentage = Math.round((score / questions.length) * 100);
+                let message = "";
+                let color = "";
+                
+                if (percentage >= 80) {
+                    message = "Outstanding! You mastered the concepts.";
+                    color = "text-green-600";
+                } else if (percentage >= 60) {
+                    message = "Good work. Review the crypto sections.";
+                    color = "text-yellow-600";
+                } else {
+                    message = "Keep practicing. Focus on the explanations.";
+                    color = "text-red-600";
+                }
+
+                return (
+                    <div className="min-h-screen flex items-center justify-center p-4">
+                        <div className="bg-white p-8 rounded-2xl shadow-xl max-w-lg w-full text-center fade-in">
+                            <h2 className="text-2xl font-bold text-slate-800 mb-4">Quiz Completed</h2>
+                            <div className="text-6xl font-bold text-purple-600 mb-4">{score} / {questions.length}</div>
+                            <div className={`text-xl font-semibold mb-6 ${color}`}>
+                                {percentage}% - {message}
+                            </div>
+                            <button 
+                                onClick={restartQuiz}
+                                className="bg-slate-800 hover:bg-slate-900 text-white font-bold py-3 px-6 rounded-lg transition duration-300"
+                            >
+                                Restart Quiz
+                            </button>
+                        </div>
+                    </div>
+                );
+            }
+
+            const currentQuestion = questions[currentIndex];
+
+            return (
+                <div className="min-h-screen py-8 px-4 flex flex-col items-center justify-center">
+                    <div className="bg-white p-6 md:p-8 rounded-2xl shadow-xl max-w-2xl w-full fade-in relative overflow-hidden">
+                        {/* Progress Bar */}
+                        <div className="absolute top-0 left-0 w-full h-2 bg-gray-200">
+                            <div 
+                                className="h-full bg-purple-500 transition-all duration-300"
+                                style={{ width: `${((currentIndex) / questions.length) * 100}%` }}
+                            ></div>
+                        </div>
+
+                        <div className="flex justify-between items-center mb-6 mt-2">
+                            <span className="text-slate-500 font-semibold text-sm">Question {currentIndex + 1} of {questions.length}</span>
+                            <span className="bg-purple-100 text-purple-800 text-xs font-bold px-2 py-1 rounded">Score: {score}</span>
+                        </div>
+
+                        <h2 className="text-xl md:text-2xl font-bold text-slate-800 mb-6">
+                            {currentQuestion.question}
+                        </h2>
+
+                        <div className="space-y-3">
+                            {currentQuestion.options.map((option, index) => {
+                                let btnClass = "w-full text-left p-4 rounded-lg border-2 transition-all duration-200 font-medium ";
+                                if (selectedOption === option) {
+                                    if (isCorrect) {
+                                        btnClass += "bg-green-100 border-green-500 text-green-800";
+                                    } else {
+                                        btnClass += "bg-red-100 border-red-500 text-red-800";
+                                    }
+                                } else if (selectedOption && option === currentQuestion.answer) {
+                                    btnClass += "bg-green-100 border-green-500 text-green-800";
+                                } else {
+                                    btnClass += "bg-white border-slate-200 hover:border-purple-400 hover:bg-slate-50 text-slate-700";
+                                }
+                                return (
+                                    <button 
+                                        key={index} 
+                                        onClick={() => handleOptionClick(option)}
+                                        disabled={!!selectedOption}
+                                        className={btnClass}
+                                    >
+                                        <div className="flex justify-between items-center">
+                                            <span>{option}</span>
+                                            {selectedOption === option && isCorrect && <i className="fas fa-check-circle text-green-600"></i>}
+                                            {selectedOption === option && !isCorrect && <i className="fas fa-times-circle text-red-600"></i>}
+                                        </div>
+                                    </button>
+                                );
+                            })}
+                        </div>
+
+                        {/* Explanation Section */}
+                        {selectedOption && (
+                            <div className="mt-6 p-4 bg-purple-50 border-l-4 border-purple-500 text-slate-700 rounded-r-lg slide-down">
+                                <p className="font-bold text-purple-700 mb-1 flex items-center">
+                                    <i className="fas fa-lightbulb mr-2 text-yellow-500"></i>
+                                    Explanation:
+                                </p>
+                                <p className="text-sm md:text-base">{currentQuestion.explanation}</p>
+                            </div>
+                        )}
+
+                        <div className="flex justify-between items-center mt-8">
+                            <button 
+                                onClick={restartQuiz}
+                                className="bg-slate-500 hover:bg-slate-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300 mr-2"
+                            >
+                                Reset
+                            </button>
+                            <button 
+                                onClick={handleNext}
+                                className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-6 rounded-lg transition duration-300"
+                                disabled={!selectedOption}
+                            >
+                                {currentIndex + 1 === questions.length ? "Finish" : "Next"}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
