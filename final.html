@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberOps Associate (200-201) Practice Exam</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #f0f4f8; }
+        .fade-in { animation: fadeIn 0.5s ease-in; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .slide-down { animation: slideDown 0.3s ease-out forwards; }
+        @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const questionsData = [
+            // --- GENERAL SECURITY CONCEPTS ---
+            {
+                question: "Which information security component is compromised in a DDoS attack?",
+                options: ["Accountability", "Confidentiality", "Integrity", "Availability"],
+                answer: "Availability",
+                explanation: "DDoS attacks aim to exhaust system resources, making the service unavailable to legitimate users, thus compromising Availability."
+            },
+            {
+                question: "What is the primary difference between a vulnerability and an exploit?",
+                options: ["Vulnerability is a tool; exploit is a weakness", "Vulnerability is a weakness; exploit is a method/tool to leverage that weakness", "They are synonyms", "Exploits are only theoretical"],
+                answer: "Vulnerability is a weakness; exploit is a method/tool to leverage that weakness",
+                explanation: "A vulnerability is a flaw in the system. An exploit is the code or technique used to take advantage of that flaw."
+            },
+            {
+                question: "Which security model relies on the concept of 'Never Trust, Always Verify'?",
+                options: ["Defense in Depth", "Zero Trust", "Perimeter Security", "Air Gapping"],
+                answer: "Zero Trust",
+                explanation: "Zero Trust assumes that threats exist both inside and outside the network, so no user or device is trusted by default."
+            },
+            {
+                question: "Which regulatory standard protects the credit card information of customers?",
+                options: ["HIPAA", "SOX", "PCI-DSS", "GDPR"],
+                answer: "PCI-DSS",
+                explanation: "The Payment Card Industry Data Security Standard (PCI-DSS) applies to companies that handle credit card information."
+            },
+            {
+                question: "What is the term for data that remains after a file is deleted but not overwritten?",
+                options: ["Data remanence", "Data encryption", "Data integrity", "Data masking"],
+                answer: "Data remanence",
+                explanation: "Data remanence is residual representation of data that remains even after attempts have been made to remove or erase the data."
+            },
+
+            // --- OPERATING SYSTEMS & ENDPOINTS ---
+            {
+                question: "In Linux, which file system feature minimizes file corruption risk in the event of a power loss?",
+                options: ["Swapping", "Journaling", "Mirroring", "Caching"],
+                answer: "Journaling",
+                explanation: "Journaling file systems (like EXT4) keep a log (journal) of changes not yet committed to the main file system, aiding recovery after crashes."
+            },
+            {
+                question: "Which Windows Registry hive contains configuration information for the currently logged-in user?",
+                options: ["HKEY_LOCAL_MACHINE", "HKEY_CURRENT_USER", "HKEY_USERS", "HKEY_CLASSES_ROOT"],
+                answer: "HKEY_CURRENT_USER",
+                explanation: "HKCU contains the configuration data for the user currently logged on to the console."
+            },
+            {
+                question: "Which Linux command displays the current processes running on the system?",
+                options: ["ls", "ps", "pwd", "cd"],
+                answer: "ps",
+                explanation: "'ps' (process status) displays information about a selection of the active processes."
+            },
+            {
+                question: "What is the purpose of the Windows 'Sysinternals' suite?",
+                options: ["To install Windows updates", "To troubleshoot, diagnose, and monitor the Windows environment", "To encrypt the hard drive", "To design web pages"],
+                answer: "To troubleshoot, diagnose, and monitor the Windows environment",
+                explanation: "Sysinternals (like Process Explorer, TCPView) are advanced tools for managing, troubleshooting, and diagnosing Windows systems."
+            },
+            {
+                question: "In a Linux permission string 'drwxr-xr-x', what does the 'd' indicate?",
+                options: ["Data file", "Directory", "Device", "Default"],
+                answer: "Directory",
+                explanation: "The first character in the permission string indicates the file type. 'd' stands for directory."
+            },
+            {
+                question: "Which Windows Event ID typically indicates a failed login attempt?",
+                options: ["4624", "4625", "7036", "1102"],
+                answer: "4625",
+                explanation: "Event ID 4625 is logged in the Security log when an account fails to log on."
+            },
+
+            // --- NETWORK DEFENSE & MONITORING ---
+            {
+                question: "Which device usually functions as the default gateway for a LAN?",
+                options: ["Switch", "Hub", "Router", "Repeater"],
+                answer: "Router",
+                explanation: "A router connects the local network to external networks (like the internet) and acts as the gateway."
+            },
+            {
+                question: "What kind of attack uses a large number of spoofed ICMP packets to overwhelm a target?",
+                options: ["SQL Injection", "Ping of Death", "ICMP Flood / Smurf Attack", "Buffer Overflow"],
+                answer: "ICMP Flood / Smurf Attack",
+                explanation: "This is a type of Denial of Service (DoS) attack where the attacker floods the target with ICMP Echo Request packets."
+            },
+            {
+                question: "Which protocol is vulnerable to 'poisoning' attacks that redirect traffic on a LAN?",
+                options: ["ARP", "DNS", "HTTP", "SMTP"],
+                answer: "ARP",
+                explanation: "ARP Spoofing/Poisoning involves sending fake ARP messages to link the attacker's MAC address with the IP address of a legitimate computer (often the gateway)."
+            },
+            {
+                question: "What does a 'Promiscuous Mode' network interface do?",
+                options: ["It blocks all traffic", "It reads all traffic on the wire, not just packets addressed to it", "It sends traffic to all ports", "It acts as a firewall"],
+                answer: "It reads all traffic on the wire, not just packets addressed to it",
+                explanation: "Packet sniffers (like Wireshark) require the NIC to be in promiscuous mode to capture all passing traffic."
+            },
+            {
+                question: "In Wireshark, which filter would show only traffic to or from IP 192.168.1.5?",
+                options: ["ip.addr == 192.168.1.5", "ip.src == 192.168.1.5", "ip.dst == 192.168.1.5", "tcp.port == 192.168.1.5"],
+                answer: "ip.addr == 192.168.1.5",
+                explanation: "The 'ip.addr' filter matches the IP in either the source or destination field."
+            },
+            {
+                question: "Which component of a firewall rule identifies the application protocol (e.g., TCP/UDP)?",
+                options: ["Service / Protocol", "Source IP", "Action", "Direction"],
+                answer: "Service / Protocol",
+                explanation: "Firewall rules typically specify Source, Destination, Service (Protocol/Port), and Action (Allow/Deny)."
+            },
+
+            // --- CRYPTOGRAPHY ---
+            {
+                question: "Alice wants to send a confidential message to Bob using asymmetric encryption. Which key does she use to encrypt it?",
+                options: ["Alice's Public Key", "Alice's Private Key", "Bob's Public Key", "Bob's Private Key"],
+                answer: "Bob's Public Key",
+                explanation: "To ensure confidentiality, you encrypt with the recipient's (Bob's) Public Key. Only Bob's Private Key can decrypt it."
+            },
+            {
+                question: "Which key does Alice use to DIGITALLY SIGN a message so Bob knows it came from her?",
+                options: ["Alice's Public Key", "Alice's Private Key", "Bob's Public Key", "Bob's Private Key"],
+                answer: "Alice's Private Key",
+                explanation: "Digital signatures use the sender's private key to sign. The recipient uses the sender's public key to verify."
+            },
+            {
+                question: "What is the result of the Diffie-Hellman algorithm?",
+                options: ["A shared secret key for symmetric encryption", "An encrypted email", "A digital signature", "A hash digest"],
+                answer: "A shared secret key for symmetric encryption",
+                explanation: "Diffie-Hellman is a key exchange method that allows two parties to securely generate a shared secret over an insecure channel."
+            },
+            {
+                question: "Which concept ensures that a sender cannot deny sending a message?",
+                options: ["Confidentiality", "Non-repudiation", "Availability", "Authorization"],
+                answer: "Non-repudiation",
+                explanation: "Non-repudiation is usually achieved through digital signatures and PKI."
+            },
+
+            // --- INCIDENT RESPONSE & NIST ---
+            {
+                question: "Which two actions are taken during the NIST 'Preparation' phase? (Select the best fit)",
+                options: ["Analyzing malware and restoring systems", "Training the CSIRT and acquiring tools", "Containing the threat and reporting", "Eradicating the virus and lessons learned"],
+                answer: "Training the CSIRT and acquiring tools",
+                explanation: "Preparation involves getting ready *before* an incident occurs: creating the team (CSIRT), training, and deploying necessary tools."
+            },
+            {
+                question: "According to NIST, what is the first step after an incident is detected?",
+                options: ["Analysis / Validation", "Eradication", "Recovery", "Preparation"],
+                answer: "Analysis / Validation",
+                explanation: "Once an alert fires, the team must analyze it to validate if it is a true incident or a false positive."
+            },
+            {
+                question: "What is 'Chain of Custody' primarily used for?",
+                options: ["To improve network speed", "To preserve the integrity of evidence for legal proceedings", "To encrypt hard drives", "To route packets"],
+                answer: "To preserve the integrity of evidence for legal proceedings",
+                explanation: "Chain of Custody documents exactly who handled evidence, when, and why, preventing claims of tampering in court."
+            },
+            {
+                question: "Which NIST phase focuses on removing the threat from the environment (e.g., deleting malware, disabling accounts)?",
+                options: ["Containment", "Eradication", "Recovery", "Detection"],
+                answer: "Eradication",
+                explanation: "Eradication involves eliminating the components of the incident, such as deleting malware or disabling breached accounts."
+            },
+            {
+                question: "Which NIST phase focuses on restoring systems to normal operation?",
+                options: ["Containment", "Eradication", "Recovery", "Post-Incident Activity"],
+                answer: "Recovery",
+                explanation: "Recovery involves restoring systems from clean backups, rebuilding systems, and monitoring for reinfection."
+            },
+
+            // --- DATA ANALYSIS & REGEX ---
+            {
+                question: "In a Regular Expression (Regex), what does the character '.' (dot) represent?",
+                options: ["A literal dot", "Any single character", "The end of a line", "A digit"],
+                answer: "Any single character",
+                explanation: "In Regex, the dot '.' matches any single character except a newline."
+            },
+            {
+                question: "What does the Regex '[0-9]{3}' match?",
+                options: ["Any 3 characters", "Exactly 3 digits", "Any digit between 0 and 3", "A string of length 9"],
+                answer: "Exactly 3 digits",
+                explanation: "[0-9] matches a digit, and {3} means 'exactly 3 times'. So it matches things like '123' or '999'."
+            },
+            {
+                question: "What is 'Data Normalization'?",
+                options: ["Encrypting data", "Making data consistent and standardizing formats", "Deleting logs", "Compressing files"],
+                answer: "Making data consistent and standardizing formats",
+                explanation: "Normalization converts data from different sources (with different formats) into a common standard for easier analysis."
+            },
+            {
+                question: "Which VERIS element describes the 'assets' affected (e.g., Server, Person, Data)?",
+                options: ["Actor", "Action", "Asset", "Attribute"],
+                answer: "Asset",
+                explanation: "The 'Asset' component describes the information assets that were compromised during the incident."
+            },
+
+            // --- THREAT INTELLIGENCE & MODELS ---
+            {
+                question: "In the Cyber Kill Chain, what happens during the 'Command and Control (C2)' phase?",
+                options: ["The attacker researches the victim", "The attacker establishes a channel to remotely manage the victim system", "The attacker delivers the payload", "The attacker installs the malware"],
+                answer: "The attacker establishes a channel to remotely manage the victim system",
+                explanation: "C2 is when the compromised host beacons out to an attacker-controlled server to receive instructions."
+            },
+            {
+                question: "Which Diamond Model vertex focuses on the methods and tools used by the attacker?",
+                options: ["Adversary", "Victim", "Capability", "Infrastructure"],
+                answer: "Capability",
+                explanation: "Capability refers to the tools, techniques, and procedures (TTPs) the adversary uses."
+            },
+            {
+                question: "What is 'Taxonomy' in the context of security alerts?",
+                options: ["A classification system for organizing information", "A tax on security software", "A type of firewall", "A malware family"],
+                answer: "A classification system for organizing information",
+                explanation: "A taxonomy provides a standardized language and structure for classifying and organizing security alerts and incidents."
+            },
+            {
+                question: "What implies that an alert was generated for benign (normal) traffic?",
+                options: ["True Positive", "True Negative", "False Positive", "False Negative"],
+                answer: "False Positive",
+                explanation: "A False Positive is an alarm that rings when there is no actual fire (benign traffic identified as malicious)."
+            },
+
+            // --- WEB & APP SECURITY ---
+            {
+                question: "Which attack involves injecting malicious scripts into trusted websites viewed by other users?",
+                options: ["SQL Injection", "Cross-Site Scripting (XSS)", "CSRF", "Brute Force"],
+                answer: "Cross-Site Scripting (XSS)",
+                explanation: "XSS involves executing malicious scripts in the victim's browser, often to steal session cookies."
+            },
+            {
+                question: "What is the primary defense against SQL Injection?",
+                options: ["Firewalls", "Input Validation / Parameterized Queries", "Antivirus", "Encryption"],
+                answer: "Input Validation / Parameterized Queries",
+                explanation: "Sanitizing user input and using parameterized queries prevents the database from interpreting input as code."
+            },
+            {
+                question: "Which HTTP header is often inspected to determine the client's operating system and browser?",
+                options: ["Host", "User-Agent", "Referer", "Cookie"],
+                answer: "User-Agent",
+                explanation: "The User-Agent string identifies the client application (browser) and operating system version."
+            },
+            {
+                question: "What is 'Tor' primarily used for?",
+                options: ["High-speed file transfer", "Anonymizing internet traffic", "Hosting corporate websites", "Email filtering"],
+                answer: "Anonymizing internet traffic",
+                explanation: "Tor (The Onion Router) routes traffic through multiple encrypted relays to hide the user's location and usage."
+            },
+
+            // --- MIXED SCENARIOS ---
+            {
+                question: "An analyst sees a large spike in outbound traffic on port 53. What is a likely cause?",
+                options: ["HTTP file download", "DNS Exfiltration / Tunneling", "FTP transfer", "SSH session"],
+                answer: "DNS Exfiltration / Tunneling",
+                explanation: "Port 53 is DNS. Large outbound spikes often indicate attackers hiding data inside DNS queries (tunneling)."
+            },
+            {
+                question: "You receive a file with the hash '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8'. Which algorithm likely created this?",
+                options: ["MD5", "SHA-1", "SHA-256", "CRC32"],
+                answer: "SHA-256",
+                explanation: "SHA-256 produces a 256-bit hash, usually represented as a 64-character hexadecimal string. (MD5 is 32 chars, SHA-1 is 40 chars)."
+            },
+            {
+                question: "Which tool allows you to replay captured network traffic to test intrusion detection rules?",
+                options: ["Wireshark", "Tcpreplay", "Nmap", "Netcat"],
+                answer: "Tcpreplay",
+                explanation: "Tcpreplay is a suite of tools for editing and replaying previously captured network traffic."
+            },
+            {
+                question: "What is a 'Runbook'?",
+                options: ["A list of passwords", "A conditional set of actions to perform (automated or manual) for a specific process", "A physical logbook", "A list of employees"],
+                answer: "A conditional set of actions to perform (automated or manual) for a specific process",
+                explanation: "Runbooks (often part of SOAR) document specific procedures for handling routine tasks or incidents."
+            },
+            {
+                question: "Which CVSS metric would be adjusted if an exploit requires the attacker to physically touch the device?",
+                options: ["Attack Vector", "Attack Complexity", "Privileges Required", "User Interaction"],
+                answer: "Attack Vector",
+                explanation: "The Attack Vector metric reflects the context of access (Network, Adjacent, Local, Physical)."
+            },
+            {
+                question: "What is 'Dwell Time'?",
+                options: ["The time to ping a server", "The duration a threat actor is present in a network before detection", "The time it takes to boot Linux", "The lifespan of a hard drive"],
+                answer: "The duration a threat actor is present in a network before detection",
+                explanation: "Dwell time measures how long an attacker operates undetected. Reducing this is a key goal of SOCs."
+            },
+            {
+                question: "Which technology is used to virtually segregate traffic on the same physical switch?",
+                options: ["VLAN", "VPN", "NAT", "DHCP"],
+                answer: "VLAN",
+                explanation: "VLANs (Virtual LANs) partition a single Layer 2 network into multiple distinct broadcast domains."
+            },
+            {
+                question: "What is the purpose of 'Hashing' a file before analysis?",
+                options: ["To encrypt it", "To compress it", "To verify integrity and identify the file (fingerprint)", "To delete it"],
+                answer: "To verify integrity and identify the file (fingerprint)",
+                explanation: "Hashing creates a unique fingerprint. If the hash matches a known malware hash, you know what the file is immediately."
+            },
+            {
+                question: "Which command in Linux changes the owner of a file?",
+                options: ["chmod", "chown", "passwd", "usermod"],
+                answer: "chown",
+                explanation: "'chown' stands for CHange OWNer."
+            },
+            {
+                question: "What implies that a system fails 'Open'?",
+                options: ["It shuts down completely", "It allows access when the security mechanism fails", "It blocks all access when it fails", "It reboots securely"],
+                answer: "It allows access when the security mechanism fails",
+                explanation: "Fail Open (or Fail Safe in some contexts) means that if the security control fails, traffic is allowed to pass (prioritizing availability over security)."
+            },
+            {
+                question: "What is a 'Jump Box'?",
+                options: ["A physical router", "A hardened server used to access and manage devices in a separate security zone", "A malware sandbox", "A DHCP server"],
+                answer: "A hardened server used to access and manage devices in a separate security zone",
+                explanation: "Admins connect to the Jump Box first, then jump to the sensitive servers, reducing the attack surface."
+            },
+            {
+                question: "Which type of analysis uses baseline statistics to identify events that fall outside normal parameters?",
+                options: ["Anomaly-based / Probabilistic", "Signature-based / Deterministic", "Policy-based", "Rule-based"],
+                answer: "Anomaly-based / Probabilistic",
+                explanation: "Anomaly detection looks for deviations from a known baseline of normal behavior."
+            },
+            {
+                question: "What is 'Lateral Movement'?",
+                options: ["Moving a computer to a new desk", "The attacker moving from one compromised host to another within the network", "Upgrading software", "Sending data to the cloud"],
+                answer: "The attacker moving from one compromised host to another within the network",
+                explanation: "After initial compromise, attackers move laterally to find high-value targets."
+            },
+            {
+                question: "Which DNS record type is used for IPv6 addresses?",
+                options: ["A", "AAAA", "MX", "CNAME"],
+                answer: "AAAA",
+                explanation: "A records are for IPv4 (32-bit); AAAA records are for IPv6 (128-bit)."
+            },
+            {
+                question: "What is 'Deep Packet Inspection (DPI)'?",
+                options: ["Checking only the header", "Examining the data part (payload) and header of a packet", "Checking the cable quality", "Looking at the router case"],
+                answer: "Examining the data part (payload) and header of a packet",
+                explanation: "DPI looks inside the packet payload to identify applications, malware, or specific content."
+            },
+            {
+                question: "What does the 'S' in HTTPS stand for?",
+                options: ["Standard", "Secure", "System", "Simple"],
+                answer: "Secure",
+                explanation: "HTTPS (Hypertext Transfer Protocol Secure) uses TLS/SSL to encrypt communication."
+            },
+            {
+                question: "Which Windows tool allows you to edit the Registry?",
+                options: ["regedit", "cmd", "taskmgr", "notepad"],
+                answer: "regedit",
+                explanation: "Regedit.exe is the graphical tool for viewing and editing the Windows Registry."
+            },
+            {
+                question: "What is the standard port for SSH?",
+                options: ["21", "22", "23", "80"],
+                answer: "22",
+                explanation: "SSH defaults to port 22. Telnet is 23. FTP is 21."
+            },
+            {
+                question: "What is 'Social Engineering'?",
+                options: ["Building secure servers", "Manipulating people into performing actions or divulging confidential information", "Coding in Python", "Configuring firewalls"],
+                answer: "Manipulating people into performing actions or divulging confidential information",
+                explanation: "Social engineering targets the 'human element' of security rather than technical vulnerabilities."
+            },
+            {
+                question: "Which term describes a system designed to look vulnerable to attract attackers?",
+                options: ["Firewall", "Honeypot", "Proxy", "Switch"],
+                answer: "Honeypot",
+                explanation: "Honeypots are decoy systems used to lure attackers and study their behavior."
+            },
+            {
+                question: "What is 'Metadata'?",
+                options: ["Data about data", "Encrypted data", "Deleted data", "Big data"],
+                answer: "Data about data",
+                explanation: "Metadata describes the content (e.g., file size, author, creation date) without containing the content itself."
+            },
+            {
+                question: "Which concept involves proving a user's identity?",
+                options: ["Authentication", "Authorization", "Accounting", "Auditing"],
+                answer: "Authentication",
+                explanation: "Authentication verifies *who* you are."
+            },
+            {
+                question: "What is 'Risk Mitigation'?",
+                options: ["Ignoring the risk", "Taking steps to reduce the likelihood or impact of a risk", "Transferring risk to insurance", "Accepting the risk"],
+                answer: "Taking steps to reduce the likelihood or impact of a risk",
+                explanation: "Mitigation involves implementing controls (like firewalls or patches) to lower the risk."
+            },
+            {
+                question: "What defines a 'Man-in-the-Middle' attack?",
+                options: ["The attacker intercepts communication between two parties", "The attacker deletes the server", "The attacker guesses passwords", "The attacker physically steals the laptop"],
+                answer: "The attacker intercepts communication between two parties",
+                explanation: "MitM involves an attacker secretly relaying and possibly altering communication between two parties who believe they are communicating directly."
+            },
+            {
+                question: "What is the function of a 'Proxy Server'?",
+                options: ["To act as a gateway between a local network and a larger network (Internet)", "To store emails", "To run databases", "To print documents"],
+                answer: "To act as a gateway between a local network and a larger network (Internet)",
+                explanation: "Proxies handle requests on behalf of clients, providing caching, filtering, and anonymity."
+            },
+            {
+                question: "Which tool scans for vulnerabilities in a network?",
+                options: ["Nessus / OpenVAS", "Word", "Excel", "Outlook"],
+                answer: "Nessus / OpenVAS",
+                explanation: "Vulnerability scanners like Nessus or OpenVAS identify missing patches and misconfigurations."
+            },
+            {
+                question: "What is 'Phishing'?",
+                options: ["Fishing for compliments", "Sending fraudulent emails to induce individuals to reveal personal information", "Scanning ports", "Encrypting files"],
+                answer: "Sending fraudulent emails to induce individuals to reveal personal information",
+                explanation: "Phishing is a form of social engineering via email."
+            },
+            {
+                question: "What is 'Whitelisting'?",
+                options: ["Allowing only approved applications/traffic", "Blocking known bad applications", "Printing a list on white paper", "Encrypting lists"],
+                answer: "Allowing only approved applications/traffic",
+                explanation: "Whitelisting (Allow-listing) is a 'default deny' approach where only pre-approved items are allowed."
+            },
+            {
+                question: "What is 'Blacklisting'?",
+                options: ["Blocking known bad applications/traffic", "Allowing everything", "Using dark mode", "Deleting lists"],
+                answer: "Blocking known bad applications/traffic",
+                explanation: "Blacklisting (Block-listing) allows everything except what is explicitly known to be bad."
+            },
+            {
+                question: "Which concept refers to the legal requirement to protect patient health information?",
+                options: ["HIPAA", "PCI-DSS", "SOX", "FISMA"],
+                answer: "HIPAA",
+                explanation: "HIPAA (Health Insurance Portability and Accountability Act) governs the security of PHI (Protected Health Information)."
+            },
+            {
+                question: "What is 'Role-Based Access Control (RBAC)'?",
+                options: ["Access based on user's job function", "Access based on time of day", "Access based on clearance level", "Access based on user's choice"],
+                answer: "Access based on user's job function",
+                explanation: "RBAC assigns permissions to roles (e.g., 'HR Manager'), and users are assigned to those roles."
+            },
+            {
+                question: "What is 'Symmetric' encryption?",
+                options: ["Same key for encryption and decryption", "Different keys for encryption and decryption", "No keys used", "Hashing only"],
+                answer: "Same key for encryption and decryption",
+                explanation: "Symmetric algorithms (like AES) use a shared secret key."
+            },
+            {
+                question: "What is 'Asymmetric' encryption?",
+                options: ["Public and Private key pair", "One shared key", "No keys", "Password only"],
+                answer: "Public and Private key pair",
+                explanation: "Asymmetric algorithms (like RSA) use a public key to encrypt and a private key to decrypt."
+            },
+            {
+                question: "What is the purpose of 'Network Segmentation'?",
+                options: ["To isolate traffic and limit lateral movement", "To make the network faster", "To use more cables", "To disable the internet"],
+                answer: "To isolate traffic and limit lateral movement",
+                explanation: "Segmentation divides the network into smaller zones, preventing an attacker from easily accessing the entire network if one zone is compromised."
+            },
+            {
+                question: "What is 'Incident Response'?",
+                options: ["The approach to managing and addressing the aftermath of a security breach", "Installing antivirus", "Buying insurance", "Setting up firewalls"],
+                answer: "The approach to managing and addressing the aftermath of a security breach",
+                explanation: "IR is the organized approach to addressing and managing the aftermath of a security breach or cyberattack."
+            }
+        ];
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function App() {
+            const [started, setStarted] = React.useState(false);
+            const [questions, setQuestions] = React.useState([]);
+            const [currentIndex, setCurrentIndex] = React.useState(0);
+            const [score, setScore] = React.useState(0);
+            const [showScore, setShowScore] = React.useState(false);
+            const [selectedOption, setSelectedOption] = React.useState(null);
+            const [isCorrect, setIsCorrect] = React.useState(null);
+            const [lockInput, setLockInput] = React.useState(false);
+
+            React.useEffect(() => {
+                setQuestions(shuffleArray([...questionsData]));
+            }, []);
+
+            const startQuiz = () => {
+                setStarted(true);
+            };
+
+
+            const handleOptionClick = (option) => {
+                if (lockInput) return;
+                setSelectedOption(option);
+                setLockInput(true);
+                const correct = option === questions[currentIndex].answer;
+                setIsCorrect(correct);
+                if (correct) {
+                    setScore(score + 1);
+                }
+            };
+
+            const handleNext = () => {
+                const nextQuestion = currentIndex + 1;
+                if (nextQuestion < questions.length) {
+                    setCurrentIndex(nextQuestion);
+                    setSelectedOption(null);
+                    setIsCorrect(null);
+                    setLockInput(false);
+                } else {
+                    setShowScore(true);
+                }
+            };
+
+
+            const restartQuiz = () => {
+                setQuestions(shuffleArray([...questionsData]));
+                setCurrentIndex(0);
+                setScore(0);
+                setShowScore(false);
+                setSelectedOption(null);
+                setIsCorrect(null);
+                setLockInput(false);
+                setStarted(false);
+            };
+
+            if (!started) {
+                return (
+                    <div className="min-h-screen flex items-center justify-center p-4">
+                        <div className="bg-white p-8 rounded-2xl shadow-xl max-w-lg w-full text-center fade-in">
+                            <a href="index.html" className="inline-block mb-4 bg-slate-200 hover:bg-slate-300 text-slate-800 font-bold py-2 px-4 rounded-lg transition duration-200">&larr; Go Back</a>
+                            <div className="mb-6 text-indigo-600">
+                                <i className="fas fa-graduation-cap text-6xl"></i>
+                            </div>
+                            <h1 className="text-3xl font-bold text-slate-800 mb-4">CyberOps Associate (200-201)</h1>
+                            <p className="text-slate-600 mb-8">
+                                Complete Certification Practice Exam.
+                                <br/><span className="font-semibold">{questionsData.length} Questions</span>
+                            </p>
+                            <button 
+                                onClick={startQuiz}
+                                className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300 shadow-lg transform hover:-translate-y-1"
+                            >
+                                Start Mock Exam
+                            </button>
+                        </div>
+                    </div>
+                );
+            }
+
+            if (showScore) {
+                const percentage = Math.round((score / questions.length) * 100);
+                let message = "";
+                let color = "";
+                
+                if (percentage >= 82) { // 82% is roughly the passing score for many Cisco exams
+                    message = "Congratulations! You are ready for the certification.";
+                    color = "text-green-600";
+                } else if (percentage >= 65) {
+                    message = "Solid score, but review your weak areas.";
+                    color = "text-yellow-600";
+                } else {
+                    message = "Keep practicing. Focus on NIST, CVSS, and Regex.";
+                    color = "text-red-600";
+                }
+
+                return (
+                    <div className="min-h-screen flex items-center justify-center p-4">
+                        <div className="bg-white p-8 rounded-2xl shadow-xl max-w-lg w-full text-center fade-in">
+                            <h2 className="text-2xl font-bold text-slate-800 mb-4">Exam Completed</h2>
+                            <div className="text-6xl font-bold text-indigo-600 mb-4">{score} / {questions.length}</div>
+                            <div className={`text-xl font-semibold mb-6 ${color}`}>
+                                {percentage}% - {message}
+                            </div>
+                            <button 
+                                onClick={restartQuiz}
+                                className="bg-slate-800 hover:bg-slate-900 text-white font-bold py-3 px-6 rounded-lg transition duration-300"
+                            >
+                                Restart Exam
+                            </button>
+                        </div>
+                    </div>
+                );
+            }
+
+            const currentQuestion = questions[currentIndex];
+
+            return (
+                <div className="min-h-screen py-8 px-4 flex flex-col items-center justify-center">
+                    <div className="bg-white p-6 md:p-8 rounded-2xl shadow-xl max-w-2xl w-full fade-in relative overflow-hidden">
+                        {/* Progress Bar */}
+                        <div className="absolute top-0 left-0 w-full h-2 bg-gray-200">
+                            <div 
+                                className="h-full bg-indigo-500 transition-all duration-300"
+                                style={{ width: `${((currentIndex) / questions.length) * 100}%` }}
+                            ></div>
+                        </div>
+
+                        <div className="flex justify-between items-center mb-6 mt-2">
+                            <span className="text-slate-500 font-semibold text-sm">Question {currentIndex + 1} of {questions.length}</span>
+                            <span className="bg-indigo-100 text-indigo-800 text-xs font-bold px-2 py-1 rounded">Score: {score}</span>
+                        </div>
+
+                        <h2 className="text-xl md:text-2xl font-bold text-slate-800 mb-6">
+                            {currentQuestion.question}
+                        </h2>
+
+                        <div className="space-y-3">
+                            {currentQuestion.options.map((option, index) => {
+                                let btnClass = "w-full text-left p-4 rounded-lg border-2 transition-all duration-200 font-medium ";
+                                if (selectedOption === option) {
+                                    if (isCorrect) {
+                                        btnClass += "bg-green-100 border-green-500 text-green-800";
+                                    } else {
+                                        btnClass += "bg-red-100 border-red-500 text-red-800";
+                                    }
+                                } else if (selectedOption && option === currentQuestion.answer) {
+                                    btnClass += "bg-green-100 border-green-500 text-green-800";
+                                } else {
+                                    btnClass += "bg-white border-slate-200 hover:border-indigo-400 hover:bg-slate-50 text-slate-700";
+                                }
+                                return (
+                                    <button 
+                                        key={index} 
+                                        onClick={() => handleOptionClick(option)}
+                                        disabled={!!selectedOption}
+                                        className={btnClass}
+                                    >
+                                        <div className="flex justify-between items-center">
+                                            <span>{option}</span>
+                                            {selectedOption === option && isCorrect && <i className="fas fa-check-circle text-green-600"></i>}
+                                            {selectedOption === option && !isCorrect && <i className="fas fa-times-circle text-red-600"></i>}
+                                        </div>
+                                    </button>
+                                );
+                            })}
+                        </div>
+
+                        {/* Explanation Section */}
+                        {selectedOption && (
+                            <div className="mt-6 p-4 bg-indigo-50 border-l-4 border-indigo-500 text-slate-700 rounded-r-lg slide-down">
+                                <p className="font-bold text-indigo-700 mb-1 flex items-center">
+                                    <i className="fas fa-lightbulb mr-2 text-yellow-500"></i>
+                                    Explanation:
+                                </p>
+                                <p className="text-sm md:text-base">{currentQuestion.explanation}</p>
+                            </div>
+                        )}
+
+                        <div className="flex flex-row justify-between mt-8 gap-4">
+                            <button
+                                onClick={restartQuiz}
+                                className="flex-1 bg-slate-200 hover:bg-slate-300 text-slate-800 font-bold py-2 px-4 rounded-lg transition duration-200"
+                            >
+                                Reset
+                            </button>
+                            <button
+                                onClick={handleNext}
+                                className={`flex-1 bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-lg transition duration-200 ${!selectedOption ? 'opacity-50 cursor-not-allowed' : ''}`}
+                                disabled={!selectedOption}
+                            >
+                                {currentIndex === questions.length - 1 ? 'Finish' : 'Next'}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
